@@ -48,8 +48,7 @@ def about():
         result_set = cursor.fetchall()
         return render_template('about.html', tests=result_set)
     except Exception as e:
-        print(e)
-        return render_template("home.html")
+        return render_template("error.html", error=e)
 
 
 if __name__ == '__main__':
