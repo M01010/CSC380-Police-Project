@@ -28,25 +28,28 @@ def hello():
     return render_template('home.html', title='home', posts=posts)
 
 
-@app.route('/about')
-def about():
-    db = psycopg2.connect(
+def connect():
+    con = psycopg2.connect(
         database=Config.database,
         host=Config.host,
         user=Config.user,
         password=Config.password,
         port=Config.port
     )
-    cursor = db.cursor(
-        cursor_factory=RealDictCursor
-    )
-    cursor.execute(
-        'select * from test'
-    )
-    result_set = cursor.fetchall()
-    for a in result_set:
-        print(f"id: {a['id']}, name: {a['name']}")
-    return render_template('about.html')
+    return con
+
+
+@app.route('/about')
+def about():
+    try:
+        connection = connect()
+        cursor = connection.cursor(cursor_factory=RealDictCursor)
+        cursor.execute('select * from test')
+        result_set = cursor.fetchall()
+        return render_template('about.html', tests=result_set)
+    except Exception as e:
+        print(e)
+        return render_template("home.html")
 
 
 if __name__ == '__main__':

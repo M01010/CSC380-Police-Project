@@ -1,5 +1,9 @@
 {% extends "layout.html" %}
 {% block content %}
     <h1>About</h1>
+    {% for test in tests %}
+        <span>{{ test.id }}</span>
+        <span>{{ test.name }}</span>
+    {% endfor %}
     <a href="home">home</a>
 {% endblock content %}
