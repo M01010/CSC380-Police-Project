@@ -1,0 +1,9 @@
+{% extends "layout.html" %}
+{% block content %}
+    <h1>Home page</h1>
+    {% for post in posts %}
+        <h2>{{ post.author }}</h2>
+        <span>{{ post.name }}</span>
+    {% endfor %}
+    <a href="about">about</a>
+{% endblock content %}
