@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from flask import Flask, render_template, flash
+from flask import Flask, render_template, flash, redirect, url_for
 from psycopg2.extras import RealDictCursor
 from database import Database
 
@@ -28,6 +28,28 @@ def about_supabase():
     except Exception as e:
         flash(f'Error: {e}', 'danger')  # send the alert
         return render_template('about.html')
+    finally:
+        try:
+            cursor.close()
+            connection.close()
+        except Exception as e:
+            print(e)
+
+
+@app.route('/tests/delete/<test_id>')
+def delete_test(test_id):
+    connection = None
+    cursor = None
+    try:
+        connection = Database.connect_sqlite()
+        cursor = connection.cursor()
+        cursor.execute(f'delete from test where id={test_id}')
+        connection.commit()
+        return redirect(url_for('about_sqlite'))
+    except Exception as e:
+        print(e)
+        flash(f'Error: {e}', 'danger')  # send the alert
+        return redirect(url_for('about_sqlite'))
     finally:
         try:
             cursor.close()
