@@ -58,6 +58,49 @@ def delete_test(test_id):
             print(e)
 
 
+@app.route('/tests/add/')
+def add_test():
+    connection = None
+    cursor = None
+    try:
+        connection = Database.connect_sqlite()
+        cursor = connection.cursor()
+        cursor.execute(f'insert into test values (4, "wqe")')
+        connection.commit()
+        return redirect(url_for('about_sqlite'))
+    except Exception as e:
+        print(e)
+        flash(f'Error: {e}', 'danger')  # send the alert
+        return redirect(url_for('about_sqlite'))
+    finally:
+        try:
+            cursor.close()
+            connection.close()
+        except Exception as e:
+            print(e)
+
+@app.route('/tests/edit/<test_id>')
+def edit_test(test_id):
+    connection = None
+    cursor = None
+    try:
+        connection = Database.connect_sqlite()
+        cursor = connection.cursor()
+        cursor.execute(f'select * from test where id = {test_id}')
+        test = cursor.fetchone()
+        return render_template('test_view.html', test=test)
+    except Exception as e:
+        print(e)
+        flash(f'Error: {e}', 'danger')  # send the alert
+        return redirect(url_for('about_sqlite'))
+    finally:
+        try:
+            cursor.close()
+            connection.close()
+        except Exception as e:
+            print(e)
+
+
 @app.route('/about-sqlite')
 def about_sqlite():
     start = datetime.now()
