@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from flask import Flask, render_template, flash, redirect, url_for
+from flask import Flask, render_template, flash, redirect, url_for, request
 from psycopg2.extras import RealDictCursor
 from database import Database
 
@@ -9,7 +9,7 @@ app.secret_key = '123'
 
 
 @app.route('/')
-def hello():
+def home():
     return render_template('home.html', title='home')
 
 
@@ -58,41 +58,54 @@ def delete_test(test_id):
             print(e)
 
 
-@app.route('/tests/add/')
+@app.route('/tests/add/', methods=['GET', 'POST'])
 def add_test():
-    connection = None
-    cursor = None
-    try:
-        connection = Database.connect_sqlite()
-        cursor = connection.cursor()
-        cursor.execute(f'insert into test values (4, "wqe")')
-        connection.commit()
-        return redirect(url_for('about_sqlite'))
-    except Exception as e:
-        print(e)
-        flash(f'Error: {e}', 'danger')  # send the alert
-        return redirect(url_for('about_sqlite'))
-    finally:
+    if request.method == 'POST':
+        test = {
+            'id': request.form['id'],
+            'name': request.form['name']
+        }
+        connection = None
+        cursor = None
         try:
-            cursor.close()
-            connection.close()
+            print(test)
+            connection = Database.connect_sqlite()
+            cursor = connection.cursor()
+            cursor.execute(f'insert into test values ("{test["id"]}", "{test["name"]}")')
+            connection.commit()
+            return redirect(url_for('about_sqlite'))
         except Exception as e:
             print(e)
+            flash(f'Error: {e}', 'danger')  # send the alert
+            return render_template('add_test.html', test=test)
+        finally:
+            try:
+                cursor.close()
+                connection.close()
+            except Exception as e:
+                print(e)
 
-@app.route('/tests/edit/<test_id>')
+    return render_template('add_test.html')
+
+@app.route('/tests/edit/<test_id>', methods=['GET', 'POST'])
 def edit_test(test_id):
     connection = None
     cursor = None
+    test = None
     try:
         connection = Database.connect_sqlite()
         cursor = connection.cursor()
-        cursor.execute(f'select * from test where id = {test_id}')
+        cursor.execute(f'select * from test where id={test_id}')
         test = cursor.fetchone()
-        return render_template('test_view.html', test=test)
+        if request.method == 'POST':
+            cursor.execute(f'update test set id ={request.form["id"]}, name="{request.form["name"]}" where id={test_id}')
+            connection.commit()
+            return redirect(url_for('about_sqlite'))
+        return render_template('edit_test.html', test=test)
     except Exception as e:
         print(e)
         flash(f'Error: {e}', 'danger')  # send the alert
-        return redirect(url_for('about_sqlite'))
+        return render_template('edit_test.html', test=test)
     finally:
         try:
             cursor.close()

@@ -14,9 +14,9 @@
 </head>
 <body>
 <header>
-    <a href='/'>home</a>
-    <a href='/about-supabase'>about supabase</a>
-    <a href='/about-sqlite'>about2 sqlite</a>
+    <a href="{{ url_for('home') }}">home</a>
+    <a href="{{ url_for('about_supabase') }}">about supabase</a>
+    <a href="{{ url_for('about_sqlite') }}">about2 sqlite</a>
 </header>
 <div class="container">
     {% block content %}
