@@ -1,59 +1,56 @@
 from flask import Flask, render_template, flash
-import psycopg2
 from psycopg2.extras import RealDictCursor
-
-from config import Config
-
-
+from database import Database
 
 app = Flask(__name__)
-app.secret_key = 'mm'  # Ensure you have set a secret key
-
-posts = [
-    {
-        'author': '11',
-        'name': 'dd',
-    },
-    {
-        'author': '23',
-        'name': 'ertu',
-    },
-    {
-        'author': '55',
-        'name': 'fgh',
-    }
-]
+app.secret_key = '123'
 
 
-@app.route('/home')
 @app.route('/')
 def hello():
-    return render_template('home.html', title='home', posts=posts)
+    return render_template('home.html', title='home')
 
 
-def connect():
-    con = psycopg2.connect(
-        database=Config.database,
-        host=Config.host,
-        user=Config.user,
-        password=Config.password,
-        port=Config.port
-    )
-    return con
-
-
-@app.route('/about')
-def about():
+@app.route('/about-supabase')
+def about_supabase():
+    connection = None
+    cursor = None
     try:
-        raise Exception("sql error ya 7mar")
-        connection = connect()
+        connection = Database.connect_supabase()
         cursor = connection.cursor(cursor_factory=RealDictCursor)
         cursor.execute('select * from test')
         result_set = cursor.fetchall()
         return render_template('about.html', tests=result_set)
     except Exception as e:
-        flash(f'Error: {e}', 'danger')#send the alet
+        flash(f'Error: {e}', 'danger')  # send the alert
         return render_template('about.html')
+    finally:
+        try:
+            cursor.close()
+            connection.close()
+        except Exception as e:
+            print(e)
+
+
+@app.route('/about-sqlite')
+def about_sqlite():
+    connection = None
+    cursor = None
+    try:
+        connection = Database.connect_sqlite()
+        cursor = connection.cursor()
+        cursor.execute('select * from test')
+        result_set = cursor.fetchall()
+        return render_template('about.html', tests=result_set)
+    except Exception as e:
+        flash(f'Error: {e}', 'danger')  # send the alert
+        return render_template('about.html')
+    finally:
+        try:
+            cursor.close()
+            connection.close()
+        except Exception as e:
+            print(e)
 
 
 if __name__ == '__main__':
