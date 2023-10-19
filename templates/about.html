@@ -1,6 +1,7 @@
 {% extends "layout.html" %}
 {% block content %}
     <h1>About</h1>
+    <h4>time: {{ time }}</h4>
     {% for test in tests %}
         <span>{{ test.id }}</span>
         <span>{{ test.name }}</span>

@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from flask import Flask, render_template, flash
 from psycopg2.extras import RealDictCursor
 from database import Database
@@ -13,6 +15,7 @@ def hello():
 
 @app.route('/about-supabase')
 def about_supabase():
+    start = datetime.now()
     connection = None
     cursor = None
     try:
@@ -20,7 +23,8 @@ def about_supabase():
         cursor = connection.cursor(cursor_factory=RealDictCursor)
         cursor.execute('select * from test')
         result_set = cursor.fetchall()
-        return render_template('about.html', tests=result_set)
+        diff = datetime.now() - start
+        return render_template('about.html', tests=result_set, time=diff.total_seconds())
     except Exception as e:
         flash(f'Error: {e}', 'danger')  # send the alert
         return render_template('about.html')
@@ -34,6 +38,7 @@ def about_supabase():
 
 @app.route('/about-sqlite')
 def about_sqlite():
+    start = datetime.now()
     connection = None
     cursor = None
     try:
@@ -41,7 +46,8 @@ def about_sqlite():
         cursor = connection.cursor()
         cursor.execute('select * from test')
         result_set = cursor.fetchall()
-        return render_template('about.html', tests=result_set)
+        diff = datetime.now() - start
+        return render_template('about.html', tests=result_set, time=diff.total_seconds())
     except Exception as e:
         flash(f'Error: {e}', 'danger')  # send the alert
         return render_template('about.html')
