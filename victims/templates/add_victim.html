@@ -1,11 +1,11 @@
 {% extends "layout.html" %}
 {% block content %}
-    <h1>edit test</h1>
+    <h1>add victim</h1>
     <form action="#" method="post">
         <p>Id: </p>
-        <p><input type="text" name="id" value="{{ test.id if test else '' }}"/></p><br>
+        <p><input type="text" name="id" value="{{ victim.id if victim else '' }}"/></p><br>
         <p>name: </p>
-        <p><input type="text" name="name" value="{{ test.name if test else '' }}"/></p><br>
+        <p><input type="text" name="name" value="{{ victim.name if victim else '' }}"/></p><br>
         <p><input type="submit" name="submit"/></p>
     </form>
 {% endblock content %}

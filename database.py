@@ -1,22 +1,7 @@
 import sqlite3
 
-import psycopg2
-
-from credentials import Credentials
-
 
 class Database:
-
-    @staticmethod
-    def connect_supabase():
-        con = psycopg2.connect(
-            database=Credentials.database,
-            host=Credentials.host,
-            user=Credentials.user,
-            password=Credentials.password,
-            port=Credentials.port
-        )
-        return con
 
     @staticmethod
     def connect_sqlite():
@@ -24,9 +9,9 @@ class Database:
         con.row_factory = sqlite3.Row
         return con
 
-    class Test:
+    class Victims:
         @staticmethod
-        def get_tests():
+        def get_victims():
             connection = None
             cursor = None
             try:
@@ -44,13 +29,13 @@ class Database:
                     print(e)
 
         @staticmethod
-        def get_test(test_id):
+        def get_victim(victim_id):
             connection = None
             cursor = None
             try:
                 connection = Database.connect_sqlite()
                 cursor = connection.cursor()
-                cursor.execute(f'select * from test where id={test_id}')
+                cursor.execute(f'select * from test where id={victim_id}')
                 return cursor.fetchone()
             except Exception as e:
                 raise e
@@ -62,13 +47,13 @@ class Database:
                     print(e)
 
         @staticmethod
-        def add_test(test):
+        def add_victim(victim):
             connection = None
             cursor = None
             try:
                 connection = Database.connect_sqlite()
                 cursor = connection.cursor()
-                cursor.execute(f'insert into test values ("{test["id"]}", "{test["name"]}")')
+                cursor.execute(f'insert into test values ("{victim["id"]}", "{victim["name"]}")')
                 connection.commit()
             except Exception as e:
                 raise e
@@ -80,13 +65,13 @@ class Database:
                     print(e)
 
         @staticmethod
-        def edit_test(test_id, test):
+        def edit_victim(victim_id, victim):
             connection = None
             cursor = None
             try:
                 connection = Database.connect_sqlite()
                 cursor = connection.cursor()
-                cursor.execute(f'update test set id ={test["id"]}, name="{test["name"]}" where id={test_id}')
+                cursor.execute(f'update test set id ={victim["id"]}, name="{victim["name"]}" where id={victim_id}')
                 connection.commit()
             except Exception as e:
                 raise e
@@ -98,13 +83,13 @@ class Database:
                     print(e)
 
         @staticmethod
-        def delete_test(test_id):
+        def delete_victim(victim_id):
             connection = None
             cursor = None
             try:
                 connection = Database.connect_sqlite()
                 cursor = connection.cursor()
-                cursor.execute(f'delete from test where id={test_id}')
+                cursor.execute(f'delete from test where id={victim_id}')
                 connection.commit()
                 return
             except Exception as e:
