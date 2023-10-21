@@ -36,7 +36,10 @@ class Database:
                 connection = Database.connect_sqlite()
                 cursor = connection.cursor()
                 cursor.execute(f'select * from test where id={victim_id}')
-                return cursor.fetchone()
+                rs = cursor.fetchone()
+                if rs is None:
+                    raise Exception(f'id {victim_id} doesnt exist')
+                return rs
             except Exception as e:
                 raise e
             finally:
@@ -89,6 +92,9 @@ class Database:
             try:
                 connection = Database.connect_sqlite()
                 cursor = connection.cursor()
+                cursor.execute(f'select id from test where id={victim_id}')
+                if cursor.fetchone() is None:
+                    raise Exception(f'id {victim_id} doesnt exist')
                 cursor.execute(f'delete from test where id={victim_id}')
                 connection.commit()
                 return

@@ -1,8 +1,12 @@
 {% extends "layout.html" %}
 {% block content %}
-    <h1>victim: </h1>
-    <span>{{ victim.id }}</span>
-    <span>{{ victim.name }}</span>
-    <a href="{{ url_for('victims.edit_victim',victim_id=victim.id) }}">edit</a>
-    <a href="{{ url_for('victims.delete_victim',victim_id=victim.id) }}">delete</a>
+    {% if victim %}
+        <h1>victim: </h1>
+        <span>{{ victim.id }}</span>
+        <span>{{ victim.name }}</span>
+        <a href="{{ url_for('victims.edit_victim',victim_id=victim.id) }}">edit</a>
+        <a href="{{ url_for('victims.delete_victim',victim_id=victim.id) }}">delete</a>
+    {% else %}
+        <h1>sorry, no victim found</h1>
+    {% endif %}
 {% endblock content %}

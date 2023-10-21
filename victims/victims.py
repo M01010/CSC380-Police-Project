@@ -24,12 +24,13 @@ def view_victim(victim_id):
         return render_template('view_victim.html', victim=result_set)
     except Exception as e:
         flash(f'Error: {e}', 'danger')  # send the alert
-        return render_template('view_victim.html')
+        return redirect(url_for('victims.view_victims'))
 
 @victims.route('/delete/<victim_id>')
 def delete_victim(victim_id):
     try:
         Database.Victims.delete_victim(victim_id)
+        flash('victim deleted', 'info')
         return redirect(url_for('victims.view_victims'))
     except Exception as e:
         flash(f'Error: {e}', 'danger')  # send the alert
@@ -40,13 +41,13 @@ def delete_victim(victim_id):
 def add_victim():
     if request.method == 'GET':
         return render_template('add_victim.html')
-    else:
-        try:
-            Database.Victims.add_victim(request.form)
-            return redirect(url_for('victims.view_victims'))
-        except Exception as e:
-            flash(f'Error: {e}', 'danger')  # send the alert
-            return render_template('add_victim.html', test=request.form)
+    try:
+        Database.Victims.add_victim(request.form)
+        flash('victim added', 'info')
+        return redirect(url_for('victims.view_victims'))
+    except Exception as e:
+        flash(f'Error: {e}', 'danger')  # send the alert
+        return render_template('add_victim.html', victim=request.form)
 
 
 @victims.route('/edit/<victim_id>', methods=['GET', 'POST'])
@@ -55,6 +56,7 @@ def edit_victim(victim_id):
         test = Database.Victims.get_victim(victim_id)
         if request.method == 'POST':
             Database.Victims.edit_victim(victim_id, request.form)
+            flash('victim edited', 'info')
             return redirect(url_for('victims.view_victims'))
         return render_template('edit_victim.html', victim=test)
     except Exception as e:
