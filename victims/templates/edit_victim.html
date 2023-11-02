@@ -1,0 +1,15 @@
+{% extends "layout.html" %}
+{% block content %}
+    {% if victim %}
+        <h1>edit victim</h1>
+        <form action="#" method="post">
+            <p>Id: </p>
+            <p><input type="text" name="id" value="{{ victim.id if victim else '' }}"/></p><br>
+            <p>name: </p>
+            <p><input type="text" name="name" value="{{ victim.name if victim else '' }}"/></p><br>
+            <p><input type="submit" name="submit"/></p>
+        </form>
+    {% else %}
+        <h1>sorry, no victim found</h1>
+    {% endif %}
+{% endblock content %}
