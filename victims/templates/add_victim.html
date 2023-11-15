@@ -1,11 +1,21 @@
 {% extends "layout.html" %}
 {% block content %}
-    <h1>add victim</h1>
-    <form action="#" method="post">
-        <p>Id: </p>
-        <p><input type="text" name="id" value="{{ victim.id if victim else '' }}"/></p><br>
-        <p>name: </p>
-        <p><input type="text" name="name" value="{{ victim.name if victim else '' }}"/></p><br>
-        <p><input type="submit" name="submit"/></p>
-    </form>
+   <header class="mb-4">
+    <div class="container">
+        <h1 class="text-center">Add victims</h1>
+    </div>
+</header>
+
+<form action="#" method="post">
+    <div class="mb-3">
+        <label for="idInput" class="form-label">Id:</label>
+        <input type="text" class="form-control" id="idInput" name="id" placeholder="Enter ID" value="{{ victim.id if victim else '' }}">
+    </div>
+    <div class="mb-3">
+        <label for="nameInput" class="form-label">Name:</label>
+        <input type="text" class="form-control" id="nameInput" name="name" placeholder="Enter Name" value="{{ victim.name if victim else '' }}">
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+
 {% endblock content %}

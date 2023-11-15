@@ -1,4 +1,47 @@
 {% extends "layout.html" %}
 {% block content %}
-    <h1>Home page</h1>
+    <div class="container mt-5">
+    <header class="text-center mb-5">
+        <h1>Welcome to the Police Database</h1>
+        <p class="lead">Your centralized system for managing police data, cases, and resources.</p>
+    </header>
+
+    <div class="row">
+        <div class="col-md-4 mb-3">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title">Cases</h5>
+                    <p class="card-text">Browse through all cases, view case details, and manage case status.</p>
+                    <a href="{{ url_for('home') }}" class="btn btn-primary">View Cases</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 mb-3">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title">Officers</h5>
+                    <p class="card-text">View all officers, their assigned body cams, and personal details.</p>
+                    <a href="{{ url_for('home') }}" class="btn btn-primary">View Officers</a>
+                </div>
+            </div>
+        </div>
+
+         <div class="col-md-4 mb-3">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title">Victims</h5>
+                    <p class="card-text">View all officers, their assigned body cams, and personal details.</p>
+                    <a href="{{ url_for('victims.view_victims') }}" class="btn btn-primary">View Victims</a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <footer class="my-5 text-center">
+        <p>Police Database &copy; 2023. All Rights Reserved.</p>
+    </footer>
+
+</div>
 {% endblock content %}
