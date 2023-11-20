@@ -1,0 +1,41 @@
+{% extends "layout.html" %}
+{% block content %}
+<header class="mb-4">
+    <div class="container">
+        <h1 class="text-center">Edit Case</h1>
+    </div>
+</header>
+
+<form action="{{ url_for('cases.edit_case', case_id=case.case_id) }}" method="post">
+    <div class="mb-3">
+        <label for="caseTypeSelect" class="form-label">Case Type:</label>
+        <select class="form-select" id="caseTypeSelect" name="case_type" required>
+            <option value="">Select Case Type</option>
+            <!-- Dynamically load options and select the one matching case.case_type -->
+        </select>
+    </div>
+
+    <div class="mb-3">
+        <label for="statusSelect" class="form-label">Status:</label>
+        <select class="form-select" id="statusSelect" name="status" required>
+            <option value="">Select Status</option>
+            <!-- Dynamically load options and select the one matching case.status -->
+        </select>
+    </div>
+
+    <div class="mb-3">
+        <label for="officerSelect" class="form-label">Officer:</label>
+        <select class="form-select" id="officerSelect" name="officer_id" required>
+            <option value="">Select Officer</option>
+            <!-- Dynamically load officer options and select the one matching case.officer_id -->
+        </select>
+    </div>
+
+    <div class="mb-3">
+        <label for="dateReportedInput" class="form-label">Date Reported:</label>
+        <input type="date" class="form-control" id="dateReportedInput" name="date_reported" value="{{ case.date_reported }}" required>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Update</button>
+</form>
+{% endblock %}

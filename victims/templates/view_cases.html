@@ -1,0 +1,43 @@
+{% extends "layout.html" %}
+{% block content %}
+<header class="mb-3">
+    <div class="container">
+        <h1 class="text-center">All Cases</h1>
+    </div>
+</header>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Case ID</th>
+            <th scope="col">Type</th>
+            <th scope="col">Status</th>
+            <th scope="col">Date Reported</th>
+            <th scope="col">Officer ID</th>
+            <th scope="col">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for case in cases %}
+        <tr>
+            <td>{{ case.case_id }}</td>
+            <td>{{ case.case_type }}</td>
+            <td>{{ case.status }}</td>
+            <td>{{ case.date_reported }}</td>
+            <td>{{ case.OFFICER_officer_id }}</td>
+            <td>
+                <a href="{{ url_for('cases.view_case', case_id=case.case_id) }}" class="btn btn-outline-primary btn-sm">View</a>
+                <a href="{{ url_for('cases.edit_case', case_id=case.case_id) }}" class="btn btn-outline-warning btn-sm">Edit</a>
+                <a href="{{ url_for('cases.delete_case', case_id=case.case_id) }}" class="btn btn-outline-danger btn-sm">Delete</a>
+            </td>
+        </tr>
+        {% else %}
+        <tr>
+            <td colspan="6">No cases found.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<a href="{{ url_for('cases.add_case') }}" class="btn btn-primary">Add New Case</a>
+{% endblock %}

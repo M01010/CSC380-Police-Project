@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
     <meta charset="UTF-8">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
@@ -15,26 +16,6 @@
 </head>
 <body>
 
-{#<nav class="navbar navbar-expand-lg navbar-dark bg-dark">#}
-{#  <div class="container">#}
-{#    <a class="navbar-brand" href="{{ url_for('home') }}">Police DB</a>#}
-{#    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">#}
-{#      <span class="navbar-toggler-icon"></span>#}
-{#    </button>#}
-{#    <div class="collapse navbar-collapse" id="navbarNav">#}
-{#      <ul class="navbar-nav">#}
-{#        <li class="nav-item">#}
-{#          <a class="nav-link" href="{{ url_for('home') }}">Home</a>#}
-{#        </li>o#}
-{#        <li class="nav-item">#}
-{#          <a class="nav-link" href="{{ url_for('victims.view_victims') }}">Victims</a>#}
-{#        </li>#}
-{#        <!-- another tabs-->#}
-{#      </ul>#}
-{#    </div>#}
-{#  </div>#}
-{#</nav>#}
-
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <div class="container">
     <a class="navbar-brand" href="{{ url_for('home') }}">Police DB</a>
@@ -48,8 +29,8 @@
             Cases
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdownCases">
-            <li><a class="dropdown-item" href="{{ url_for('home') }}">Show All Cases</a></li>
-            <li><a class="dropdown-item" href="{{ url_for('home') }}">Add Case</a></li>
+            <li><a class="dropdown-item" href="{{ url_for('cases.view_cases') }}">Show All Cases</a></li>
+            <li><a class="dropdown-item" href="{{ url_for('cases.add_case') }}">Add Case</a></li>
           </ul>
         </li>
         <li class="nav-item dropdown">
@@ -57,8 +38,8 @@
             Officers
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdownOfficers">
-            <li><a class="dropdown-item" href="{{ url_for('home') }}">Show All Officers</a></li>
-            <li><a class="dropdown-item" href="{{ url_for('home') }}">Add Officer</a></li>
+            <li><a class="dropdown-item" href="{{ url_for('officers.view_officers') }}">Show All Officers</a></li>
+            <li><a class="dropdown-item" href="{{ url_for('officers.add_officer') }}">Add Officer</a></li>
           </ul>
         </li>
         <!--  Victims, Suspects, Body Cams,Videos  -->
@@ -109,19 +90,9 @@
     </div>
   </div>
 </nav>
+<div>
+<br>
 
-
-
-
-{#<header>#}
-{#    <a href="{{ url_for('home') }}">home</a>#}
-{#    <a href="{{ url_for('victims.view_victims') }}">victims</a>#}
-{#</header>#}
-
-<div class="container">
-    {% block content %}
-    {% endblock %}
-</div>
 <div class="container">
     {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}
@@ -133,5 +104,13 @@
         {% endif %}
     {% endwith %}
 </div>
+</div>
+
+
+<div class="container">
+    {% block content %}
+    {% endblock %}
+</div>
+
 </body>
 </html>

@@ -1,28 +1,52 @@
 {% extends "layout.html" %}
 {% block content %}
     {% if victim %}
-    <header class="mb-3">
-        <div class="container">
-            <h1 class="text-center">victim</h1>
-        </div>
-    </header>
-    <div class="card" >
+                    {#    <header class="mb-3">#}
+                    {#        <div class="container">#}
+                    {#            <h1 class="text-center">victim</h1>#}
+                    {#        </div>#}
+                    {#    </header>#}
+                    {#    <div class="card" >#}
+                    {##}
+                    {#        <div class="card-body" style="align-content: center">#}
+                    {#            <h5 class="card-title">{{ victim.name }}</h5>#}
+                    {#            <p class="card-text">Additional details about the victim.</p>#}
+                    {#        </div >#}
+                    {#        <ul class="list-group list-group-flush">#}
+                    {#            <li class="list-group-item">ID: {{ victim.id }}</li>#}
+                    {#        </ul>#}
+                    {#        <div class="card-body" >#}
+                    {#            <a href="{{ url_for('victims.view_victim', victim_id=victim.id) }}" class="btn btn-primary">View</a>#}
+                    {#            <a href="{{ url_for('victims.edit_victim', victim_id=victim.id) }}" class="btn btn-warning" >Edit</a>#}
+                    {#            <a href="{{ url_for('victims.delete_victim', victim_id=victim.id) }}" class="btn btn-danger">Delete</a>#}
+                    {#        </div>#}
+                    {#                <a href="{{ url_for('victims.view_victims', victim_id=victim.id) }}" class="btn btn-primary">return to victims</a>#}
+                    {##}
+                    {#    </div>#}
 
-        <div class="card-body" style="align-content: center">
-            <h5 class="card-title">{{ victim.name }}</h5>
-            <p class="card-text">Additional details about the victim.</p>
-        </div >
-        <ul class="list-group list-group-flush">
-            <li class="list-group-item">ID: {{ victim.id }}</li>
-        </ul>
-        <div class="card-body" >
-{#            <a href="{{ url_for('victims.view_victim', victim_id=victim.id) }}" class="btn btn-primary">View</a>#}
-            <a href="{{ url_for('victims.edit_victim', victim_id=victim.id) }}" class="btn btn-warning" >Edit</a>
-            <a href="{{ url_for('victims.delete_victim', victim_id=victim.id) }}" class="btn btn-danger">Delete</a>
-        </div>
-                <a href="{{ url_for('victims.view_victims', victim_id=victim.id) }}" class="btn btn-primary">return to victims</a>
-
+        <header class="mb-3">
+    <div class="container">
+        <h1 class="text-center">Victim</h1>
     </div>
+</header>
+
+<div class="card">
+    <div class="card-body" style="align-content: center">
+        <h5 class="card-title">{{ victim.name }}</h5>
+        <p class="card-text">Additional details about the victim.</p>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">ID: {{ victim.victim_id }}</li>
+            <li class="list-group-item">DOB: {{ victim.date_of_birth }}</li>
+            <li class="list-group-item">Contact: {{ victim.contact_info }}</li>
+        </ul>
+    </div>
+    <div class="card-body">
+        <a href="{{ url_for('victims.edit_victim', victim_id=victim.victim_id) }}" class="btn btn-warning">Edit</a>
+        <a href="{{ url_for('victims.delete_victim', victim_id=victim.victim_id) }}" class="btn btn-danger">Delete</a>
+    </div>
+    <a href="{{ url_for('victims.view_victims') }}" class="btn btn-primary">Return to Victims</a>
+</div>
+
 
 {% else %}
     <h1>Sorry, no victim found</h1>

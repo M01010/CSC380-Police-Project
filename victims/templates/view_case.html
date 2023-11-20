@@ -1,0 +1,24 @@
+{% extends "layout.html" %}
+{% block content %}
+<header class="mb-3">
+    <div class="container">
+        <h1 class="text-center">Case Details</h1>
+    </div>
+</header>
+
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title">Case ID: {{ case.case_id }}</h5>
+        <p class="card-text"><strong>Type:</strong> {{ case.case_type }}</p>
+        <p class="card-text"><strong>Status:</strong> {{ case.status }}</p>
+        <p class="card-text"><strong>Date Reported:</strong> {{ case.date_reported }}</p>
+        <p class="card-text"><strong>Officer ID:</strong> {{ case.OFFICER_officer_id }}</p>
+        <!-- Add more case details here if necessary -->
+    </div>
+    <div class="card-body">
+        <a href="{{ url_for('cases.edit_case', case_id=case.case_id) }}" class="btn btn-warning">Edit</a>
+        <a href="{{ url_for('cases.delete_case', case_id=case.case_id) }}" class="btn btn-danger">Delete</a>
+    </div>
+    <a href="{{ url_for('cases.view_cases') }}" class="btn btn-primary">Back to Cases</a>
+</div>
+{% endblock %}
