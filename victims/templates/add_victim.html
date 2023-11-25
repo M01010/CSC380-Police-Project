@@ -1,11 +1,54 @@
 {% extends "layout.html" %}
 {% block content %}
-    <h1>add victim</h1>
+    <header class="mb-4">
+        <div class="container">
+            <h1 class="text-center">Add Victim</h1>
+        </div>
+    </header>
+
     <form action="#" method="post">
-        <p>Id: </p>
-        <p><input type="text" name="id" value="{{ victim.id if victim else '' }}"/></p><br>
-        <p>name: </p>
-        <p><input type="text" name="name" value="{{ victim.name if victim else '' }}"/></p><br>
-        <p><input type="submit" name="submit"/></p>
+        <div class="mb-3">
+            <label for="idInput" class="form-label">Victim ID:</label>
+            <input type="text" class="form-control" id="idInput" name="victim_id" placeholder="Enter Victim ID"
+                   value="{{ victim.victim_id if victim else '' }}">
+        </div>
+        <div class="mb-3">
+            <label for="nameInput" class="form-label">Name:</label>
+            <input type="text" class="form-control" id="nameInput" name="name" placeholder="Enter Name"
+                   value="{{ victim.name if victim else '' }}">
+
+            <div class="form-group">
+                <label for="dobInput">DOB:</label>
+                <input type="date" id="dobInput" name="date_of_birth"
+                       value="{{ victim.date_of_birth if victim else '2018-07-22' }}" min="1900-01-01" max="2023-12-31"
+                       class="form-control"/>
+            </div>
+
+
+            <div class="mb-3">
+                <label for="contactInput" class="form-label">Contact Info:</label>
+                <input type="text" class="form-control" id="contactInput" name="contact_info"
+                       placeholder="Enter Contact Info" value="{{ victim.contact_info if victim else '' }}">
+            </div>
+
+            <div class="mb-3">
+                <label class="input-group-text" for="caseSelect">Case:</label>
+                <select class="form-select" id="caseSelect" name="case_id">
+                    <option selected>Choose a case...</option>
+                    <!--cases list  -->
+                    {% for case in cases %}
+                        <option value="{{ case.case_id }}">{{ case.case_name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
     </form>
+
+    <div class="mt-4">
+        <a href="{{ url_for('home') }}" class="btn btn-secondary">Add New Case</a>
+    </div>
+
+
 {% endblock content %}

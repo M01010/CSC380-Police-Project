@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
     <meta charset="UTF-8">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
@@ -14,50 +15,84 @@
     {% endif %}
 </head>
 <body>
-<nav class="navbar bg-dark border-bottom border-body" data-bs-theme="dark">
-    <div class="container-fluid">
-    <a class="navbar-brand" href="#">Police Station Database</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container">
+    <a class="navbar-brand" href="{{ url_for('home') }}">Police DB</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#">Home</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Link</a>
-        </li>
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+      <ul class="navbar-nav">
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Dropdown
+          <a class="nav-link dropdown-toggle {% if active_tab == 'cases' %}active{% endif %}" href="#" id="navbarDropdownCases" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Cases
           </a>
-          <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="#">Action</a></li>
-            <li><a class="dropdown-item" href="#">Another action</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">Something else here</a></li>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdownCases">
+            <li><a class="dropdown-item" href="{{ url_for('cases.view_cases') }}">Show All Cases</a></li>
+            <li><a class="dropdown-item" href="{{ url_for('cases.add_case') }}">Add Case</a></li>
           </ul>
         </li>
-        <li class="nav-item">
-          <a class="nav-link disabled" aria-disabled="true">Disabled</a>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle {% if active_tab == 'officers' %}active{% endif %}" href="#" id="navbarDropdownOfficers" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Officers
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdownOfficers">
+            <li><a class="dropdown-item" href="{{ url_for('officers.view_officers') }}">Show All Officers</a></li>
+            <li><a class="dropdown-item" href="{{ url_for('officers.add_officer') }}">Add Officer</a></li>
+          </ul>
         </li>
+        <!--  Victims, Suspects, Body Cams,Videos  -->
+      <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle {% if active_tab == 'victims' %}active{% endif %}" href="#" id="navbarDropdownVictims" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Victims
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdownVictims">
+            <li><a class="dropdown-item" href="{{ url_for('victims.view_victims') }}">Show All Victims</a></li>
+            <li><a class="dropdown-item" href="{{ url_for('victims.add_victim') }}">Add Victim</a></li>
+          </ul>
+        </li>
+
+       <!-- Suspects Dropdown -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownSuspects" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Suspects
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdownSuspects">
+            <li><a class="dropdown-item" href="{{ url_for('home') }}">Show All Suspects</a></li>
+            <li><a class="dropdown-item" href="{{ url_for('home') }}">Add Suspect</a></li>
+          </ul>
+        </li>
+
+        <!-- Body Cams Dropdown -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownBodyCams" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Body Cams
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdownBodyCams">
+            <li><a class="dropdown-item" href="{{ url_for('home') }}">Show All Body Cams</a></li>
+            <li><a class="dropdown-item" href="{{ url_for('home') }}">Add Body Cam</a></li>
+          </ul>
+        </li>
+
+        <!-- Videos Dropdown -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownVideos" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Videos
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdownVideos">
+            <li><a class="dropdown-item" href="{{ url_for('home') }}">Show All Videos</a></li>
+            <li><a class="dropdown-item" href="{{ url_for('home') }}">Add Video</a></li>
+          </ul>
+        </li>
+
       </ul>
-      <form class="d-flex" role="search">
-        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-success" type="submit">Search</button>
-      </form>
     </div>
   </div>
 </nav>
-<header>
-    <a href="{{ url_for('home') }}">home</a>
-    <a href="{{ url_for('victims.view_victims') }}">victims</a>
-</header>
-<div class="container">
-    {% block content %}
-    {% endblock %}
-</div>
+<div>
+<br>
+
 <div class="container">
     {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}
@@ -69,5 +104,13 @@
         {% endif %}
     {% endwith %}
 </div>
+</div>
+
+
+<div class="container">
+    {% block content %}
+    {% endblock %}
+</div>
+
 </body>
 </html>

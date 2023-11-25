@@ -1,0 +1,49 @@
+{% extends "layout.html" %}
+{% block content %}
+<header class="mb-4">
+    <div class="container">
+        <h1 class="text-center">Add Officer</h1>
+    </div>
+</header>
+
+<form action="{{ url_for('officers.add_officer') }}" method="post">
+    <div class="mb-3">
+        <label for="officerIdInput" class="form-label">Officer ID:</label>
+        <input type="text" class="form-control" id="officerIdInput" name="officer_id" placeholder="Enter Officer ID">
+    </div>
+    <div class="mb-3">
+        <label for="nameInput" class="form-label">Name:</label>
+        <input type="text" class="form-control" id="nameInput" name="name" placeholder="Enter Name">
+    </div>
+    <div class="mb-3">
+        <label for="badgeNumberInput" class="form-label">Badge Number:</label>
+        <input type="text" class="form-control" id="badgeNumberInput" name="badge_number" placeholder="Enter Badge Number">
+    </div>
+
+    <div class="form-group">
+    <label for="dobInput">DOB:</label>
+    <input type="date" id="dobInput" name="date_of_birth" value="{{ officers.date_of_birth if victim else '2023-11-20' }}" min="1900-01-01" max="2023-12-31" class="form-control" />
+</div>
+{#    <div class="mb-3">#}
+{#        <label for="rankInput" class="form-label">Rank:</label>#}
+{#        <input type="text" class="form-control" id="rankInput" name="rank" placeholder="Enter Rank">#}
+{#    </div>#}
+    <div class="mb-3">
+    <label for="rankInput" class="form-label">Rank:</label>
+    <select class="form-select" id="rankInput" name="rank" required>
+        <option value="">Select Rank</option>
+        <option value="Colonel">Colonel</option>
+        <option value="Lieutenant Colonel">Lieutenant Colonel</option>
+        <option value="Major">Major</option>
+        <option value="Captain">Captain</option>
+        <option value="Lieutenant">Lieutenant</option>
+        <option value="Sergeant">Sergeant</option>
+        <option value="Trooper First">Trooper First</option>
+        <option value="Trooper">Trooper</option>
+    </select>
+</div>
+
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+{% endblock %}

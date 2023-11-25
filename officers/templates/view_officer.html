@@ -1,0 +1,27 @@
+{% extends "layout.html" %}
+{% block content %}
+<header class="mb-3">
+    <div class="container">
+        <h1 class="text-center">Officer</h1>
+    </div>
+</header>
+
+<div class="card">
+    <div class="card-body" style="align-content: center">
+        <h5 class="card-title">{{ officer.name }}</h5>
+        <p class="card-text">Additional details about the officer.</p>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">ID: {{ officer.officer_id }}</li>
+            <li class="list-group-item">Badge Number: {{ officer.badge_number }}</li>
+            <li class="list-group-item">DOB: {{ officer.date_of_birth }}</li>
+            <li class="list-group-item">Rank: {{ officer.rank }}</li>
+            <!-- Add more fields as needed -->
+        </ul>
+    </div>
+    <div class="card-body">
+        <a href="{{ url_for('officers.edit_officer', officer_id=officer.officer_id) }}" class="btn btn-warning">Edit</a>
+        <a href="{{ url_for('officers.delete_officer', officer_id=officer.officer_id) }}" class="btn btn-danger">Delete</a>
+    </div>
+    <a href="{{ url_for('officers.view_officers') }}" class="btn btn-primary">Return to Officers</a>
+</div>
+{% endblock %}
