@@ -43,6 +43,28 @@ class DB_Victims:
                 connection.close()
 
     @staticmethod
+    def get_victims_by_case(case_id):
+        connection = None
+        cursor = None
+        try:
+            connection = Database.connect_mysql()
+            cursor = connection.cursor(dictionary=True)
+            cursor.execute('''
+            SELECT * FROM victim v
+            INNER JOIN affected_in a ON v.victim_id = a.VICTIM_victim_id
+            INNER JOIN `case` c ON a.CASE_case_id = c.case_id
+            WHERE c.case_id = %s
+            ''', (case_id,))
+            return cursor.fetchall()
+        except Exception as e:
+            raise e
+        finally:
+            if cursor is not None:
+                cursor.close()
+            if connection is not None:
+                connection.close()
+
+    @staticmethod
     def add_victim(victim):
         connection = None
         cursor = None

@@ -1,6 +1,7 @@
 from flask import Blueprint, request, render_template, redirect, url_for, flash
 from db_cases import DB_Cases
 from db_officers import DB_Officers
+from db_victims import DB_Victims
 
 cases_blueprint = Blueprint('cases', __name__, template_folder='templates', url_prefix='/cases')
 
@@ -19,7 +20,8 @@ def view_cases():
 def view_case(case_id):
     try:
         case = DB_Cases.get_case(case_id)
-        return render_template('view_case.html', case=case)
+        victims = DB_Victims.get_victims_by_case(case_id)
+        return render_template('view_case.html', case=case, victims=victims)
     except Exception as e:
         flash(f"Error: {e}", "danger")
         return redirect(url_for('cases.view_cases'))
