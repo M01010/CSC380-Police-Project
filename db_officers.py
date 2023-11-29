@@ -88,6 +88,26 @@ class DB_Officers:
                 connection.close()
 
     @staticmethod
+    def get_officers_by_name(name):
+        connection = None
+        cursor = None
+        try:
+            connection = Database.connect_mysql()
+            cursor = connection.cursor(dictionary=True)
+            cursor.execute(f'''
+            SELECT * FROM officer o
+            WHERE o.name like "%{name}%"
+            ''')
+            return cursor.fetchall()
+        except Exception as e:
+            raise e
+        finally:
+            if cursor is not None:
+                cursor.close()
+            if connection is not None:
+                connection.close()
+
+    @staticmethod
     def delete_officer(officer_id):
         connection = None
         cursor = None

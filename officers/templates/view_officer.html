@@ -1,27 +1,63 @@
 {% extends "layout.html" %}
 {% block content %}
-<header class="mb-3">
-    <div class="container">
-        <h1 class="text-center">Officer</h1>
-    </div>
-</header>
+    <header class="mb-3">
+        <div class="container">
+            <h1 class="text-center">Officer</h1>
+        </div>
+    </header>
 
-<div class="card">
-    <div class="card-body" style="align-content: center">
-        <h5 class="card-title">{{ officer.name }}</h5>
-        <p class="card-text">Additional details about the officer.</p>
-        <ul class="list-group list-group-flush">
-            <li class="list-group-item">ID: {{ officer.officer_id }}</li>
-            <li class="list-group-item">Badge Number: {{ officer.badge_number }}</li>
-            <li class="list-group-item">DOB: {{ officer.date_of_birth }}</li>
-            <li class="list-group-item">Rank: {{ officer.rank }}</li>
-            <!-- Add more fields as needed -->
-        </ul>
+    <div class="card">
+        <div class="card-body" style="align-content: center">
+            <h5 class="card-title">{{ officer.name }}</h5>
+            <p class="card-text">Additional details about the officer.</p>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">ID: {{ officer.officer_id }}</li>
+                <li class="list-group-item">Badge Number: {{ officer.badge_number }}</li>
+                <li class="list-group-item">DOB: {{ officer.date_of_birth }}</li>
+                <li class="list-group-item">Rank: {{ officer.rank }}</li>
+                <!-- Add more fields as needed -->
+            </ul>
+        </div>
+        <div class="card-body">
+            <a href="{{ url_for('officers.edit_officer', officer_id=officer.officer_id) }}"
+               class="btn btn-warning">Edit</a>
+            <a href="{{ url_for('officers.delete_officer', officer_id=officer.officer_id) }}" class="btn btn-danger">Delete</a>
+        </div>
+        <a href="{{ url_for('officers.view_officers') }}" class="btn btn-primary">Return to Officers</a>
     </div>
-    <div class="card-body">
-        <a href="{{ url_for('officers.edit_officer', officer_id=officer.officer_id) }}" class="btn btn-warning">Edit</a>
-        <a href="{{ url_for('officers.delete_officer', officer_id=officer.officer_id) }}" class="btn btn-danger">Delete</a>
-    </div>
-    <a href="{{ url_for('officers.view_officers') }}" class="btn btn-primary">Return to Officers</a>
-</div>
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">Case ID</th>
+            <th scope="col">Type</th>
+            <th scope="col">Status</th>
+            <th scope="col">Date Reported</th>
+            <th scope="col">Officer ID</th>
+            <th scope="col">Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for case in cases %}
+            <tr>
+                <td>{{ case.case_id }}</td>
+                <td>{{ case.case_type }}</td>
+                <td>{{ case.status }}</td>
+                <td>{{ case.date_reported }}</td>
+                <td>{{ case.OFFICER_officer_id }}</td>
+                <td>
+                    <a href="{{ url_for('cases.view_case', case_id=case.case_id) }}"
+                       class="btn btn-outline-primary btn-sm">View</a>
+                    <a href="{{ url_for('cases.edit_case', case_id=case.case_id) }}"
+                       class="btn btn-outline-warning btn-sm">Edit</a>
+                    <a href="{{ url_for('cases.delete_case', case_id=case.case_id) }}"
+                       class="btn btn-outline-danger btn-sm">Delete</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">No cases found.</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
 {% endblock %}

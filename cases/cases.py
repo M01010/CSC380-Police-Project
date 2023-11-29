@@ -1,6 +1,8 @@
 from flask import Blueprint, request, render_template, redirect, url_for, flash
 from db_cases import DB_Cases
 from db_officers import DB_Officers
+from db_victims import DB_Victims
+from constants import Constants
 
 cases_blueprint = Blueprint('cases', __name__, template_folder='templates', url_prefix='/cases')
 
@@ -19,7 +21,8 @@ def view_cases():
 def view_case(case_id):
     try:
         case = DB_Cases.get_case(case_id)
-        return render_template('view_case.html', case=case)
+        victims = DB_Victims.get_victims_by_case(case_id)
+        return render_template('view_case.html', case=case, victims=victims)
     except Exception as e:
         flash(f"Error: {e}", "danger")
         return redirect(url_for('cases.view_cases'))
@@ -41,7 +44,8 @@ def add_case():
     try:
         if request.method == 'GET':
             officers = DB_Officers.get_officers()
-            return render_template('add_case.html', officers=officers)
+            return render_template('add_case.html', officers=officers,
+                                   constants=Constants)
         DB_Cases.add_case(request.form)
         flash("Case added successfully!", "info")
         return redirect(url_for('cases.view_case', case_id=request.form['case_id']))
@@ -55,10 +59,13 @@ def edit_case(case_id):
     try:
         if request.method == 'GET':
             case = DB_Cases.get_case(case_id)
-            return render_template('edit_case.html', case=case)
+            officer = DB_Officers.get_officer(case['OFFICER_officer_id'])
+            officers = DB_Officers.get_officers()
+            return render_template('edit_case.html', case=case, officer=officer, officers=officers,
+                                   constants=Constants)
         DB_Cases.edit_case(case_id, request.form)
         flash("Case updated successfully!", "info")
         return redirect(url_for('cases.view_cases'))
     except Exception as e:
         flash(f"Error: {e}", "danger")
-        return render_template('cases.view_cases')
+        return render_template(url_for('cases.view_cases'))
