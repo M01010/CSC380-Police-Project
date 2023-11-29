@@ -17,6 +17,7 @@
         <div class="card-body">
             <a href="{{ url_for('cases.edit_case', case_id=case.case_id) }}" class="btn btn-warning">Edit</a>
             <a href="{{ url_for('cases.delete_case', case_id=case.case_id) }}" class="btn btn-danger">Delete</a>
+            <a href="{{ url_for('officers.view_officer', officer_id=case.OFFICER_officer_id) }}" class="btn btn-outline-primary">View Officer</a>
         </div>
         <a href="{{ url_for('cases.view_cases') }}" class="btn btn-primary">Back to Cases</a>
     </div>

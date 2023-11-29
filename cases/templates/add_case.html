@@ -1,70 +1,56 @@
 {% extends "layout.html" %}
 {% block content %}
-<header class="mb-4">
-    <div class="container">
-        <h1 class="text-center">Add New Case</h1>
-    </div>
-</header>
+    <header class="mb-4">
+        <div class="container">
+            <h1 class="text-center">Add New Case</h1>
+        </div>
+    </header>
 
-<form action="{{ url_for('cases.add_case') }}" method="post">
+    <form action="{{ url_for('cases.add_case') }}" method="post">
 
-<div class="mb-3">
-    <label for="caseIdInput" class="form-label">Case ID:</label>
-<input type="number" class="form-control" id="caseIdInput" name="case_id" placeholder="Enter Case ID" required>
-</div>
+        <div class="mb-3">
+            <label for="caseIdInput" class="form-label">Case ID:</label>
+            <input type="number" class="form-control" id="caseIdInput" name="case_id" placeholder="Enter Case ID"
+                   required>
+        </div>
 
-    <div class="mb-3">
-        <label for="caseTypeSelect" class="form-label">Case Type:</label>
-        <select class="form-select" id="caseTypeSelect" name="case_type" required>
-            <option value="">Select Case Type</option>
-            <option value="Homicide">Homicide</option>
-            <option value="Assault">Assault</option>
-            <option value="Burglary/Theft">Burglary/Theft</option>
-            <option value="Robbery">Robbery</option>
-            <option value="Fraud/Financial Crimes">Fraud/Financial Crimes</option>
-            <option value="Drug-Related Offenses">Drug-Related Offenses</option>
-            <option value="Sexual Offenses">Sexual Offenses</option>
-            <option value="Traffic Violations">Traffic Violations</option>
-            <option value="Vandalism">Vandalism</option>
-            <option value="Missing Persons">Missing Persons</option>
-            <option value="Domestic Violence">Domestic Violence</option>
-            <option value="Cybercrime">Cybercrime</option>
-            <option value="Arson">Arson</option>
-            <option value="Public Disorder">Public Disorder</option>
-            <option value="Terrorism">Terrorism</option>
-            <option value="Unknown">Unknown</option>
+        <div class="mb-3">
+            <label for="caseTypeSelect" class="form-label">Case Type:</label>
+            <select class="form-select" id="caseTypeSelect" name="case_type" required>
+                <option value="">Select Case Type</option>
+                {% for type in constants.case_types %}
+                    <option value={{ type }}> {{ type }}</option>
+                {% endfor %}
+            </select>
+        </div>
 
+        <div class="mb-3">
+            <label for="statusSelect" class="form-label">Status:</label>
+            <select class="form-select" id="statusSelect" name="status" required>
+                <option value="">Select Status</option>
+                {% for status in constants.case_status %}
+                    <option value={{ status }}> {{ status }}</option>
+                {% endfor %}
+            </select>
+        </div>
 
-        </select>
-    </div>
+        <div class="mb-3">
+            <label for="officerSelect" class="form-label">Officer:</label>
+            <select class="form-select" id="officerSelect" name="officer_id" required>
+                <option value="">Select Officer</option>
+                {% for officer in officers %}
+                    <option value="{{ officer.officer_id }}">{{ officer.name }}</option>
+                {% endfor %}
+            </select>
 
-    <div class="mb-3">
-        <label for="statusSelect" class="form-label">Status:</label>
-        <select class="form-select" id="statusSelect" name="status" required>
-            <option value="">Select Status</option>
-            <option value="Open">Open</option>
-            <option value="Close">Close</option>
-            <option value="Pending">Pending</option>
-            <option value="Unknown">Unknown</option>
-        </select>
-    </div>
+        </div>
 
-    <div class="mb-3">
-        <label for="officerSelect" class="form-label">Officer:</label>
-        <select class="form-select" id="officerSelect" name="officer_id" required>
-    <option value="">Select Officer</option>
-    {% for officer in officers %}
-        <option value="{{ officer.officer_id }}">{{ officer.name }}</option>
-    {% endfor %}
-</select>
+        <div class="mb-3">
+            <label for="dateReportedInput" class="form-label">Date Reported:</label>
+            <input type="date" class="form-control" id="dateReportedInput" name="date_reported"
+                   min={{ constants.minDate }} max={{ constants.maxDate }} required>
+        </div>
 
-    </div>
-
-    <div class="mb-3">
-        <label for="dateReportedInput" class="form-label">Date Reported:</label>
-        <input type="date" class="form-control" id="dateReportedInput" name="date_reported" required>
-    </div>
-
-    <button type="submit" class="btn btn-primary">Submit</button>
-</form>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
 {% endblock %}

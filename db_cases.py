@@ -87,6 +87,48 @@ class DB_Cases:
                 connection.close()
 
     @staticmethod
+    def get_cases_for_victim(victim_id):
+        connection = None
+        cursor = None
+        try:
+            connection = Database.connect_mysql()
+            cursor = connection.cursor(dictionary=True)
+            cursor.execute('''
+            SELECT * FROM `CASE` c
+            inner join affected_in a on c.case_id = a.CASE_case_id
+            inner join victim v on v.victim_id = a.VICTIM_victim_id
+            where v.victim_id = %s
+            ''', (victim_id, ))
+            return cursor.fetchall()
+        except Exception as e:
+            raise e
+        finally:
+            if cursor is not None:
+                cursor.close()
+            if connection is not None:
+                connection.close()
+
+    @staticmethod
+    def get_cases_for_officer(officer_id):
+        connection = None
+        cursor = None
+        try:
+            connection = Database.connect_mysql()
+            cursor = connection.cursor(dictionary=True)
+            cursor.execute('''
+            SELECT * FROM `CASE` c
+            where c.OFFICER_officer_id = %s
+            ''', (officer_id, ))
+            return cursor.fetchall()
+        except Exception as e:
+            raise e
+        finally:
+            if cursor is not None:
+                cursor.close()
+            if connection is not None:
+                connection.close()
+
+    @staticmethod
     def delete_case(case_id):
         connection = None
         cursor = None

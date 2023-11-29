@@ -20,7 +20,7 @@
             <div class="form-group">
                 <label for="dobInput">DOB:</label>
                 <input type="date" id="dobInput" name="date_of_birth"
-                       value="{{ victim.date_of_birth if victim else '2018-07-22' }}" min="1900-01-01" max="2023-12-31"
+                       value="{{ victim.date_of_birth if victim else '' }}" min={{ constants.minDate }} max={{ constants.maxDate }}
                        class="form-control"/>
             </div>
 
@@ -31,24 +31,24 @@
                        placeholder="Enter Contact Info" value="{{ victim.contact_info if victim else '' }}">
             </div>
 
-            <div class="mb-3">
-                <label class="input-group-text" for="caseSelect">Case:</label>
-                <select class="form-select" id="caseSelect" name="case_id">
-                    <option selected>Choose a case...</option>
-                    <!--cases list  -->
-                    {% for case in cases %}
-                        <option value="{{ case.case_id }}">{{ case.case_name }}</option>
-                    {% endfor %}
-                </select>
-            </div>
+{#            <div class="mb-3">#}
+{#                <label class="input-group-text" for="caseSelect">Case:</label>#}
+{#                <select class="form-select" id="caseSelect" name="case_id">#}
+{#                    <option selected>Choose a case...</option>#}
+{#                    <!--cases list  -->#}
+{#                    {% for case in cases %}#}
+{#                        <option value="{{ case.case_id }}">{{ case.case_name }}</option>#}
+{#                    {% endfor %}#}
+{#                </select>#}
+{#            </div>#}
 
             <button type="submit" class="btn btn-primary">Submit</button>
         </div>
     </form>
 
-    <div class="mt-4">
-        <a href="{{ url_for('home') }}" class="btn btn-secondary">Add New Case</a>
-    </div>
+{#    <div class="mt-4">#}
+{#        <a href="{{ url_for('home') }}" class="btn btn-secondary">Add New Case</a>#}
+{#    </div>#}
 
 
 {% endblock content %}

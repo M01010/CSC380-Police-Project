@@ -1,5 +1,7 @@
 from flask import Blueprint, request, render_template, redirect, url_for, flash
 from db_officers import DB_Officers
+from db_cases import DB_Cases
+from constants import Constants
 
 officers_blueprint = Blueprint('officers', __name__, template_folder='templates', url_prefix='/officers')
 
@@ -18,7 +20,8 @@ def view_officers():
 def view_officer(officer_id):
     try:
         officer = DB_Officers.get_officer(officer_id)
-        return render_template('view_officer.html', officer=officer)
+        cases = DB_Cases.get_cases_for_officer(officer_id)
+        return render_template('view_officer.html', officer=officer, cases=cases)
     except Exception as e:
         flash(f'Error: {e}', 'danger')
         return redirect(url_for('officers.view_officers'))
@@ -38,7 +41,7 @@ def delete_officer(officer_id):
 def add_officer():
     try:
         if request.method == 'GET':
-            return render_template('add_officer.html')
+            return render_template('add_officer.html', constants=Constants)
         DB_Officers.add_officer(request.form)
         flash('Officer added successfully!', 'info')
         return redirect(url_for('officers.view_officers'))
@@ -52,7 +55,7 @@ def edit_officer(officer_id):
     try:
         if request.method == 'GET':
             officer = DB_Officers.get_officer(officer_id)
-            return render_template('edit_officer.html', officer=officer)
+            return render_template('edit_officer.html', officer=officer, constants=Constants)
         DB_Officers.edit_officer(officer_id, request.form)
         flash('Officer updated successfully!', 'info')
         return redirect(url_for('officers.view_officers'))

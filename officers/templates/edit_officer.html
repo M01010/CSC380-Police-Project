@@ -1,41 +1,40 @@
 {% extends "layout.html" %}
 {% block content %}
-<header class="mb-4">
-    <div class="container">
-        <h1 class="text-center">Edit Officer</h1>
-    </div>
-</header>
+    <header class="mb-4">
+        <div class="container">
+            <h1 class="text-center">Edit Officer</h1>
+        </div>
+    </header>
 
-<form action="{{ url_for('officers.edit_officer', officer_id=officer.officer_id) }}" method="post">
-    <div class="mb-3">
-        <label for="nameInput" class="form-label">Name:</label>
-        <input type="text" class="form-control" id="nameInput" name="name" value="{{ officer.name }}">
-    </div>
-    <div class="mb-3">
-        <label for="badgeNumberInput" class="form-label">Badge Number:</label>
-        <input type="text" class="form-control" id="badgeNumberInput" name="badge_number" value="{{ officer.badge_number }}">
-    </div>
+    <form action="{{ url_for('officers.edit_officer', officer_id=officer.officer_id) }}" method="post">
+        <div class="mb-3">
+            <label for="nameInput" class="form-label">Name:</label>
+            <input type="text" class="form-control" id="nameInput" name="name" value="{{ officer.name }}">
+        </div>
+        <div class="mb-3">
+            <label for="badgeNumberInput" class="form-label">Badge Number:</label>
+            <input type="text" class="form-control" id="badgeNumberInput" name="badge_number"
+                   value="{{ officer.badge_number }}">
+        </div>
 
-     <div class="form-group">
-    <label for="dobInput">DOB:</label>
-    <input type="date" id="dobInput" name="date_of_birth" value="{{ officer.date_of_birth }}" min="1900-01-01" max="2023-12-31" class="form-control" />
-</div>
+        <div class="form-group">
+            <label for="dobInput">DOB:</label>
+            <input type="date" id="dobInput" name="date_of_birth" value="{{ officer.date_of_birth }}" min={{ constants.minDate }}
+                    max={{ constants.maxDate }} class="form-control"/>
+        </div>
 
-    <div class="mb-3">
-    <label for="rankInput" class="form-label">Rank:</label>
-    <select class="form-select" id="rankInput" name="rank" required>
-        <option value="">Select Rank</option>
-        <option value="Colonel">Colonel</option>
-        <option value="Lieutenant Colonel">Lieutenant Colonel</option>
-        <option value="Major">Major</option>
-        <option value="Captain">Captain</option>
-        <option value="Lieutenant">Lieutenant</option>
-        <option value="Sergeant">Sergeant</option>
-        <option value="Trooper First">Trooper First</option>
-        <option value="Trooper">Trooper</option>
-    </select>
-</div>
+        <div class="mb-3">
+            <label for="rankInput" class="form-label">Rank:</label>
+            <select class="form-select" id="rankInput" name="rank" required>
+                <option value={{ officer.rank }}>{{ officer.rank }}</option>
+                {% for rank in constants.officer_ranks %}
+                    {% if rank!= officer.rank %}
+                        <option value={{ rank }}>{{ rank }}</option>
+                    {% endif %}
+                {% endfor %}
+            </select>
+        </div>
 
-    <button type="submit" class="btn btn-primary">Update</button>
-</form>
+        <button type="submit" class="btn btn-primary">Update</button>
+    </form>
 {% endblock %}
