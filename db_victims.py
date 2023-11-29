@@ -65,6 +65,26 @@ class DB_Victims:
                 connection.close()
 
     @staticmethod
+    def get_victims_by_name(name):
+        connection = None
+        cursor = None
+        try:
+            connection = Database.connect_mysql()
+            cursor = connection.cursor(dictionary=True)
+            cursor.execute(f'''
+            SELECT * FROM victim v
+            WHERE v.name like "%{name}%"
+            ''')
+            return cursor.fetchall()
+        except Exception as e:
+            raise e
+        finally:
+            if cursor is not None:
+                cursor.close()
+            if connection is not None:
+                connection.close()
+
+    @staticmethod
     def add_victim(victim):
         connection = None
         cursor = None

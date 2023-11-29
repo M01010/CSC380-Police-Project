@@ -6,10 +6,13 @@ from constants import Constants
 officers_blueprint = Blueprint('officers', __name__, template_folder='templates', url_prefix='/officers')
 
 
-@officers_blueprint.route('/')
+@officers_blueprint.route('/', methods=['GET', 'POST'])
 def view_officers():
     try:
-        officer_list = DB_Officers.get_officers()
+        if request.method == 'GET':
+            officer_list = DB_Officers.get_officers()
+            return render_template('view_officers.html', officers=officer_list)
+        officer_list = DB_Officers.get_officers_by_name(request.form['search'])
         return render_template('view_officers.html', officers=officer_list)
     except Exception as e:
         flash(f'Error: {e}', 'danger')

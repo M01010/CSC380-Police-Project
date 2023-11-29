@@ -1,32 +1,45 @@
 {% extends "layout.html" %}
 {% block content %}
     <header class="mb-3">
-    <div class="container">
-        <h1 class="text-center">Victims</h1>
-    </div>
-</header>
+        <div class="container">
+            <h1 class="text-center">Victims</h1>
+        </div>
+    </header>
 
-<div class="row">
-    {% for victim in victims %}
-        <div class="col-md-4 mb-4">
-            <div class="card" style="width: 18rem;">
-                <div class="card-body">
-                    <h5 class="card-title">{{ victim.name }}</h5>
-                    <p class="card-text">ID: {{ victim.victim_id }}</p>
-                    <p class="card-text">DOB: {{ victim.date_of_birth }}</p>
-                    <p class="card-text">Contact: {{ victim.contact_info }}</p>
-                </div>
-                <div class="card-body">
-                    <a href="{{ url_for('victims.view_victim', victim_id=victim.victim_id) }}" class="btn btn-outline-primary">View</a>
-                    <a href="{{ url_for('victims.edit_victim', victim_id=victim.victim_id) }}" class="btn btn-outline-warning">Edit</a>
-                    <a href="{{ url_for('victims.delete_victim', victim_id=victim.victim_id) }}" class="btn btn-outline-danger">Delete</a>
+    <form action="#" method="post">
+        <div class="mb-3">
+            <input type="text" class="form-control" name="search" placeholder="Search Victims..."
+                   value="">
+        </div>
+
+        <div class="mb-3">
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+    </form>
+    <div class="row">
+        {% for victim in victims %}
+            <div class="col-md-4 mb-4">
+                <div class="card" style="width: 18rem;">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ victim.name }}</h5>
+                        <p class="card-text">ID: {{ victim.victim_id }}</p>
+                        <p class="card-text">DOB: {{ victim.date_of_birth }}</p>
+                        <p class="card-text">Contact: {{ victim.contact_info }}</p>
+                    </div>
+                    <div class="card-body">
+                        <a href="{{ url_for('victims.view_victim', victim_id=victim.victim_id) }}"
+                           class="btn btn-outline-primary">View</a>
+                        <a href="{{ url_for('victims.edit_victim', victim_id=victim.victim_id) }}"
+                           class="btn btn-outline-warning">Edit</a>
+                        <a href="{{ url_for('victims.delete_victim', victim_id=victim.victim_id) }}"
+                           class="btn btn-outline-danger">Delete</a>
+                    </div>
                 </div>
             </div>
-        </div>
-    {% endfor %}
-</div>
+        {% endfor %}
+    </div>
 
-<a href="{{ url_for('victims.add_victim') }}" class="btn btn-primary mt-3">Add New Victim</a>
+    <a href="{{ url_for('victims.add_victim') }}" class="btn btn-primary mt-3">Add New Victim</a>
 
 
 {% endblock content %}

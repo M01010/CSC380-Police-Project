@@ -6,10 +6,13 @@ from constants import Constants
 victims_blueprint = Blueprint('victims', __name__, template_folder='templates', url_prefix='/victims')
 
 
-@victims_blueprint.route('/')
+@victims_blueprint.route('/', methods=['GET', 'POST'])
 def view_victims():
     try:
-        result_set = DB_Victims.get_victims()
+        if request.method == 'GET':
+            result_set = DB_Victims.get_victims()
+            return render_template('view_victims.html', victims=result_set)
+        result_set = DB_Victims.get_victims_by_name(request.form['search'])
         return render_template('view_victims.html', victims=result_set)
     except Exception as e:
         flash(f'Error: {e}', 'danger')
