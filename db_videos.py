@@ -32,7 +32,7 @@ class DB_Videos:
                 ''', (video_id,))
             rs = cursor.fetchone()
             if rs is None:
-                raise Exception(f'Victim ID {victim_id} does not exist')
+                raise Exception(f'Victim ID {video_id} does not exist')
             return rs
         except Exception as e:
             raise e

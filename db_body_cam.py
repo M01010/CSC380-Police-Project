@@ -61,7 +61,7 @@ class DB_BodyCam:
             WHERE case_id = %s''', (bc_id,))
             rs = cursor.fetchone()
             if rs is None:
-                raise Exception(f'body cam ID {body_cam} does not exist')
+                raise Exception(f'body cam ID {bc_id} does not exist')
             return rs
         except Exception as e:
             raise e
