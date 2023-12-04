@@ -1,3 +1,45 @@
+{#{% extends "layout.html" %}#}
+{#{% block content %}#}
+{#<header class="mb-3">#}
+{#    <div class="container">#}
+{#        <h1 class="text-center">Officers</h1>#}
+{#    </div>#}
+{#</header>#}
+{##}
+{#<div class="mb-3">#}
+{#    <form class="d-flex" role="search" action="#" method="post">#}
+{#        <input class="form-control me-2" type="search" name="search" placeholder="Search Officers..." aria-label="Search">#}
+{#        <button class="btn btn-outline-success" type="submit">Search</button>#}
+{#    </form>#}
+{#</div>#}
+{##}
+{##}
+{#<div class="row">#}
+{#    {% for officer in officers %}#}
+{#        <div class="col-md-4 mb-4">#}
+{#            <div class="card" style="width: 18rem;">#}
+{#                <div class="card-body">#}
+{#                    <h5 class="card-title">{{ officer.name }}</h5>#}
+{#                    <p class="card-text">ID: {{ officer.officer_id }}</p>#}
+{#                    <p class="card-text">Badge Number: {{ officer.badge_number }}</p>#}
+{#                    <li class="list-group-item">DOB: {{ officer.date_of_birth }}</li>#}
+{#                    <p class="card-text">Rank: {{ officer.rank }}</p>#}
+{#                </div>#}
+{#                <div class="card-body">#}
+{#                    <a href="{{ url_for('officers.view_officer', officer_id=officer.officer_id) }}" class="btn btn-outline-primary">View</a>#}
+{#                    <a href="{{ url_for('officers.edit_officer', officer_id=officer.officer_id) }}" class="btn btn-outline-warning">Edit</a>#}
+{#                    <a href="{{ url_for('officers.delete_officer', officer_id=officer.officer_id) }}" class="btn btn-outline-danger">Delete</a>#}
+{#                </div>#}
+{#            </div>#}
+{#        </div>#}
+{#    {% endfor %}#}
+{#</div>#}
+{##}
+{#<a href="{{ url_for('officers.add_officer') }}" class="btn btn-primary mt-3">Add New Officer</a>#}
+{#{% endblock %}#}
+
+{# above me is the cards officers format, and down is tabular #}
+
 {% extends "layout.html" %}
 {% block content %}
 <header class="mb-3">
@@ -6,36 +48,46 @@
     </div>
 </header>
 
-
-    <form action="#" method="post">
-        <div class="mb-3">
-            <input type="text" class="form-control" name="search" placeholder="Search Officers..."
-                   value="">
-        </div>
-        <div class="mb-3">
-            <button type="submit" class="btn btn-primary">Submit</button>
-        </div>
+<div class="mb-3">
+    <form class="d-flex" role="search" action="#" method="post">
+        <input class="form-control me-2" type="search" name="search" placeholder="Search Officers..." aria-label="Search">
+        <button class="btn btn-outline-success" type="submit">Search</button>
     </form>
-<div class="row">
-    {% for officer in officers %}
-        <div class="col-md-4 mb-4">
-            <div class="card" style="width: 18rem;">
-                <div class="card-body">
-                    <h5 class="card-title">{{ officer.name }}</h5>
-                    <p class="card-text">ID: {{ officer.officer_id }}</p>
-                    <p class="card-text">Badge Number: {{ officer.badge_number }}</p>
-                    <li class="list-group-item">DOB: {{ officer.date_of_birth }}</li>
-                    <p class="card-text">Rank: {{ officer.rank }}</p>
-                </div>
-                <div class="card-body">
-                    <a href="{{ url_for('officers.view_officer', officer_id=officer.officer_id) }}" class="btn btn-outline-primary">View</a>
-                    <a href="{{ url_for('officers.edit_officer', officer_id=officer.officer_id) }}" class="btn btn-outline-warning">Edit</a>
-                    <a href="{{ url_for('officers.delete_officer', officer_id=officer.officer_id) }}" class="btn btn-outline-danger">Delete</a>
-                </div>
-            </div>
-        </div>
-    {% endfor %}
 </div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Name</th>
+            <th scope="col">Badge Number</th>
+            <th scope="col">DOB</th>
+            <th scope="col">Rank</th>
+            <th scope="col">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for officer in officers %}
+        <tr>
+            <td>{{ officer.officer_id }}</td>
+            <td>{{ officer.name }}</td>
+            <td>{{ officer.badge_number }}</td>
+            <td>{{ officer.date_of_birth }}</td>
+            <td>{{ officer.rank }}</td>
+            <td>
+                <a href="{{ url_for('officers.view_officer', officer_id=officer.officer_id) }}" class="btn btn-outline-primary btn-sm">View</a>
+                <a href="{{ url_for('officers.edit_officer', officer_id=officer.officer_id) }}" class="btn btn-outline-warning btn-sm">Edit</a>
+                <a href="{{ url_for('officers.delete_officer', officer_id=officer.officer_id) }}" class="btn btn-outline-danger btn-sm">Delete</a>
+            </td>
+        </tr>
+        {% else %}
+        <tr>
+            <td colspan="6">No officers found.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
 
 <a href="{{ url_for('officers.add_officer') }}" class="btn btn-primary mt-3">Add New Officer</a>
 {% endblock %}
+

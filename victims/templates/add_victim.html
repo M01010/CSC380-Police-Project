@@ -31,16 +31,16 @@
                        placeholder="Enter Contact Info" value="{{ victim.contact_info if victim else '' }}">
             </div>
 
-{#            <div class="mb-3">#}
-{#                <label class="input-group-text" for="caseSelect">Case:</label>#}
-{#                <select class="form-select" id="caseSelect" name="case_id">#}
-{#                    <option selected>Choose a case...</option>#}
-{#                    <!--cases list  -->#}
-{#                    {% for case in cases %}#}
-{#                        <option value="{{ case.case_id }}">{{ case.case_name }}</option>#}
-{#                    {% endfor %}#}
-{#                </select>#}
-{#            </div>#}
+{#<div class="mb-3">#}
+{#            <label for="officerSelect" class="form-label">case:</label>#}
+{#            <select class="form-select" id="officerSelect" name="officer_id" required>#}
+{#                <option value="">Select case</option>#}
+{#                {% for case in cases %}#}
+{#                    <option value="{{ case.id }}">{{ case.id }}</option>#}
+{#                {% endfor %}#}
+{#            </select>#}
+{##}
+{#        </div>#}
 
             <button type="submit" class="btn btn-primary">Submit</button>
         </div>

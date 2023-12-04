@@ -46,6 +46,13 @@
     </div>
     <a href="{{ url_for('victims.view_victims') }}" class="btn btn-primary">Return to Victims</a>
 </div>
+        <br>
+         <div class="card">
+        <div class="card-header">
+            <h5 class="card-title">cases {{ victim.name }} is affected in:  </h5>
+        </div>
+        <div class="card-body">
+
         <table class="table">
     <thead>
         <tr>
@@ -78,6 +85,8 @@
         {% endfor %}
     </tbody>
 </table>
+        </div>
+         </div>
 
 
 {% else %}

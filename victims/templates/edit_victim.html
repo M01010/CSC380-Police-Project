@@ -8,11 +8,7 @@
         </header>
 
         <form action="#" method="post">
-{#            <div class="mb-3">#}
-{#                <label for="idInput" class="form-label">Victim ID:</label>#}
-{#                <input type="text" class="form-control" id="idInput" name="victim_id" placeholder="Enter Victim ID"#}
-{#                       value="{{ victim.victim_id }}">#}
-{#            </div>#}
+
             <div class="mb-3">
                 <label for="nameInput" class="form-label">Name:</label>
                 <input type="text" class="form-control" id="nameInput" name="name" placeholder="Enter Name"
@@ -31,25 +27,25 @@
                     <input type="text" class="form-control" id="contactInput" name="contact_info"
                            placeholder="Enter Contact Info" value="{{ victim.contact_info }}">
                 </div>
-{##}
-{#                <div class="mb-3">#}
-{#                    <label class="input-group-text" for="caseSelect">Case:</label>#}
-{#                    <select class="form-select" id="caseSelect" name="case_id">#}
-{#                        <option selected>Choose a case...</option>#}
-{#                        <!-- cases list  -->#}
-{#                        {% for case in cases %}#}
-{#                            <option value="{{ case.case_id }}">{{ case.case_id }} - {{ case.case_type }}</option>#}
-{#                        {% endfor %}#}
-{#                    </select>#}
-{#                </div>#}
+
+                <div class="mb-3">
+                    <label class="input-group-text" for="caseSelect">Case:</label>
+                    <select class="form-select" id="caseSelect" name="case_id">
+                        <option selected>Choose a case...</option>
+                        <!-- cases list  -->
+                        {% for case in cases %}
+                            <option value="{{ case.case_id }}">{{ case.case_id , case.case_type , case.case ,case.status , 'date of report: {}'.format(case.date_reported) }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
 
                 <button type="submit" class="btn btn-primary">Submit</button>
             </div>
         </form>
 
-{#        <div class="mt-4">#}
-{#            <a href="{{ url_for('cases.add_case') }}" class="btn btn-secondary">Add New Case</a>#}
-{#        </div>#}
+        <div class="mt-4">
+            <a href="{{ url_for('home') }}" class="btn btn-secondary">Add New Case</a>
+        </div>
 
     {% else %}
         <h1>sorry, no victim found</h1>

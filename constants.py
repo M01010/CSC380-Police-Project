@@ -1,6 +1,7 @@
 import datetime
 
 
+
 class Constants:
     maxDate = datetime.datetime.now().date()
     minDate = datetime.date(1900, 1, 1)
@@ -10,3 +11,4 @@ class Constants:
                   "Cybercrime", "Arson", "Public Disorder", "Terrorism", "Unknown"]
     officer_ranks = ["Colonel", "Lieutenant Colonel", "Major", "Captain",
                      "Lieutenant", "Sergeant", "Trooper First", "Trooper"]
+    # case_info = case.case_id , case.case_type , case.case ,case.status , 'date of report: {}'.format(case.date_reported)
