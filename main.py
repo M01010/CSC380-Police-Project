@@ -6,7 +6,7 @@ from suspects.suspects import suspects_blueprint
 
 app = Flask(__name__)
 app.secret_key = '123'
-app.register_blueprint(suspects_blueprint,url_prefix='/suspects')
+app.register_blueprint(suspects_blueprint, url_prefix='/suspects')
 app.register_blueprint(victims_blueprint, url_prefix='/victims')
 app.register_blueprint(officers_blueprint, url_prefix='/officers')
 app.register_blueprint(cases_blueprint, url_prefix='/cases')

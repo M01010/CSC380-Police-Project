@@ -18,7 +18,7 @@
                     <label for="dobInput">DOB:</label>
                     <input type="date" id="dobInput" name="date_of_birth"
                            value="{{ victim.date_of_birth }}" min={{ constants.minDate }}
-                           max={{ constants.maxDate }} class="form-control"/>
+                                   max={{ constants.maxDate }} class="form-control"/>
                 </div>
 
 
@@ -28,17 +28,28 @@
                            placeholder="Enter Contact Info" value="{{ victim.contact_info }}">
                 </div>
 
-                <div class="mb-3">
-                    <label class="input-group-text" for="caseSelect">Case:</label>
-                    <select class="form-select" id="caseSelect" name="case_id">
-                        <option selected>Choose a case...</option>
-                        <!-- cases list  -->
-                        {% for case in cases %}
-                            <option value="{{ case.case_id }}">{{ case.case_id , case.case_type , case.case ,case.status , 'date of report: {}'.format(case.date_reported) }}</option>
-                        {% endfor %}
-                    </select>
-                </div>
-
+{#                <div class="mb-3">#}
+{#                    <label class="input-group-text" for="caseSelect">Case:</label>#}
+{#                    <button class="btn btn-primary dropdown-toggle"#}
+{#                            type="button"#}
+{#                            id="multiSelectDropdown"#}
+{#                            data-bs-toggle="dropdown"#}
+{#                            aria-expanded="false">#}
+{#                        Choose cases...#}
+{#                    </button>#}
+{#                    <ul class="dropdown-menu"#}
+{#                        aria-labelledby="multiSelectDropdown">#}
+{#                        <!-- cases list  -->#}
+{#                        {% for case in cases %}#}
+{#                            <li>#}
+{#                                <label class="form-check-label" for="{{ case.case_id }}">  id: {{ case.case_id }},#}
+{#                                    name: {{ case.name }}</label>#}
+{#                                <input class="form-check-input" type="checkbox" value="{{ case.case_id }}"#}
+{#                                       id="{{ case.case_id }}"/>#}
+{#                            </li>#}
+{#                        {% endfor %}#}
+{#                    </ul>#}
+{#                </div>#}
                 <button type="submit" class="btn btn-primary">Submit</button>
             </div>
         </form>
