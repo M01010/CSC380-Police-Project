@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 {% block content %}
     <a href="{{ url_for('cases.view_case', case_id=case_id) }}"
-       class="btn btn-outline-primary">back to case</a>
+       class="btn btn-primary">back to case</a>
     <table class="table">
         <thead>
 
@@ -17,15 +17,14 @@
         <tbody>
         {% for victim in victims %}
             <tr>
-                <td>ID: {{ victim.victim_id }}</td>
-                <td>{{ victim.name }}</td>
-                <td>DOB: {{ victim.date_of_birth }}</td>
-                <td>Contact: {{ victim.contact_info }}</td>
+                <td>{{ victim.victim_id }}</td>
+                <td>{{ victim.name if victim.name != '' else 'No name' }}</td>
+                <td>{{ victim.date_of_birth if victim.date_of_birth != '' else 'No DOB' }}</td>
+                <td>{{ victim.contact_info if victim.contact_info != '' else 'No contact' }}</td>
                 <td>
                     <form action="{{ url_for('cases.edit_case_victims_edit', case_id=case_id, delete=1, victim_id=victim.victim_id) }}"
                           method="post">
-                        <button type="submit" class="btn btn-danger">Delete
-                            victim from case
+                        <button type="submit" class="btn btn-danger">Remove from case
                         </button>
                     </form>
                 </td>
@@ -52,15 +51,15 @@
         <tbody>
         {% for victim in all_victims %}
             <tr>
-                <td>ID: {{ victim.victim_id }}</td>
-                <td>{{ victim.name }}</td>
-                <td>DOB: {{ victim.date_of_birth }}</td>
-                <td>Contact: {{ victim.contact_info }}</td>
+                <td>{{ victim.victim_id }}</td>
+                <td>{{ victim.name if victim.name != '' else  'No name' }}</td>
+                <td>{{ victim.date_of_birth if victim.date_of_birth != '' else  'No DOB' }}</td>
+                <td>{{ victim.contact_info if victim.contact_info != '' else 'No contact' }}</td>
                 <td>
                     <form action="{{ url_for('cases.edit_case_victims_edit', case_id=case_id, delete=0, victim_id=victim.victim_id) }}"
                           method="post">
-                        <button type="submit" class="btn btn-primary">Add
-                            victim to case
+                        <button type="submit" class="btn btn-primary">
+                            Add to case
                         </button>
                     </form>
                 </td>

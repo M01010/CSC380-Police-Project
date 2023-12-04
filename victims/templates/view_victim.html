@@ -1,97 +1,79 @@
 {% extends "layout.html" %}
 {% block content %}
     {% if victim %}
-                    {#    <header class="mb-3">#}
-                    {#        <div class="container">#}
-                    {#            <h1 class="text-center">victim</h1>#}
-                    {#        </div>#}
-                    {#    </header>#}
-                    {#    <div class="card" >#}
-                    {##}
-                    {#        <div class="card-body" style="align-content: center">#}
-                    {#            <h5 class="card-title">{{ victim.name }}</h5>#}
-                    {#            <p class="card-text">Additional details about the victim.</p>#}
-                    {#        </div >#}
-                    {#        <ul class="list-group list-group-flush">#}
-                    {#            <li class="list-group-item">ID: {{ victim.id }}</li>#}
-                    {#        </ul>#}
-                    {#        <div class="card-body" >#}
-                    {#            <a href="{{ url_for('victims.view_victim', victim_id=victim.id) }}" class="btn btn-primary">View</a>#}
-                    {#            <a href="{{ url_for('victims.edit_victim', victim_id=victim.id) }}" class="btn btn-warning" >Edit</a>#}
-                    {#            <a href="{{ url_for('victims.delete_victim', victim_id=victim.id) }}" class="btn btn-danger">Delete</a>#}
-                    {#        </div>#}
-                    {#                <a href="{{ url_for('victims.view_victims', victim_id=victim.id) }}" class="btn btn-primary">return to victims</a>#}
-                    {##}
-                    {#    </div>#}
-
         <header class="mb-3">
-    <div class="container">
-        <h1 class="text-center">Victim</h1>
-    </div>
-</header>
+            <div class="container">
+                <h1 class="text-center">Victim</h1>
+            </div>
+        </header>
 
-<div class="card">
-    <div class="card-body" style="align-content: center">
-        <h5 class="card-title">{{ victim.name }}</h5>
-        <p class="card-text">Additional details about the victim.</p>
-        <ul class="list-group list-group-flush">
-            <li class="list-group-item">ID: {{ victim.victim_id }}</li>
-            <li class="list-group-item">DOB: {{ victim.date_of_birth }}</li>
-            <li class="list-group-item">Contact: {{ victim.contact_info }}</li>
-        </ul>
-    </div>
-    <div class="card-body">
-        <a href="{{ url_for('victims.edit_victim', victim_id=victim.victim_id) }}" class="btn btn-warning">Edit</a>
-        <a href="{{ url_for('victims.delete_victim', victim_id=victim.victim_id) }}" class="btn btn-danger">Delete</a>
-    </div>
-{#    <a href="{{ url_for('victims.view_victims') }}" class="btn btn-primary">Return to Victims</a>#}
-</div>
+        <div class="card">
+            <div class="card-body" style="align-content: center">
+                <h5 class="card-title">{{ victim.name if victim.name != '' else 'No name' }}</h5>
+                <p class="card-text">Additional details about the victim.</p>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">ID: {{ victim.victim_id }}</li>
+                    <li class="list-group-item">
+                        DOB: {{ victim.date_of_birth if victim.date_of_birth != '' else 'No DOB' }}</li>
+                    <li class="list-group-item">Contact
+                        info: {{ victim.contact_info if victim.contact_info != '' else 'No contact info' }}</li>
+                </ul>
+            </div>
+            <div class="card-body">
+                <a href="{{ url_for('victims.edit_victim', victim_id=victim.victim_id) }}"
+                   class="btn btn-warning">Edit</a>
+                <a href="{{ url_for('victims.delete_victim', victim_id=victim.victim_id) }}" class="btn btn-danger">Delete</a>
+            </div>
+            {#    <a href="{{ url_for('victims.view_victims') }}" class="btn btn-primary">Return to Victims</a>#}
+        </div>
         <br>
-         <div class="card">
-        <div class="card-header">
-            <h5 class="card-title">cases {{ victim.name }} is affected in:  </h5>
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title">cases {{ victim.name }} is affected in: </h5>
+            </div>
+            <div class="card-body">
+
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th scope="col">Case ID</th>
+                        <th scope="col">Type</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Date Reported</th>
+                        <th scope="col">Officer ID</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for case in cases %}
+                        <tr>
+                            <td>{{ case.case_id }}</td>
+                            <td>{{ case.name if case.name != '' else 'No Case name' }}</td>
+                            <td>{{ case.case_type if case.case_type != '' else 'No Case type' }}</td>
+                            <td>{{ case.status if case.status != '' else 'No Case status' }}</td>
+                            <td>{{ case.date_reported if case.date_reported != '' else 'No Case date' }}</td>
+                            <td>{{ case.OFFICER_officer_id }}</td>
+                            <td>
+                                <a href="{{ url_for('cases.view_case', case_id=case.case_id) }}"
+                                   class="btn btn-outline-primary btn-sm">View</a>
+                                {#                <a href="{{ url_for('cases.edit_case', case_id=case.case_id) }}" class="btn btn-outline-warning btn-sm">Edit</a>#}
+                                {#                <a href="{{ url_for('cases.delete_case', case_id=case.case_id) }}" class="btn btn-outline-danger btn-sm">Delete</a>#}
+                            </td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="6">No cases found.</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
         </div>
-        <div class="card-body">
-
-        <table class="table">
-    <thead>
-        <tr>
-            <th scope="col">Case ID</th>
-            <th scope="col">Type</th>
-            <th scope="col">Status</th>
-            <th scope="col">Date Reported</th>
-            <th scope="col">Officer ID</th>
-            <th scope="col">Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for case in cases %}
-        <tr>
-            <td>{{ case.case_id }}</td>
-            <td>{{ case.case_type }}</td>
-            <td>{{ case.status }}</td>
-            <td>{{ case.date_reported }}</td>
-            <td>{{ case.OFFICER_officer_id }}</td>
-            <td>
-                <a href="{{ url_for('cases.view_case', case_id=case.case_id) }}" class="btn btn-outline-primary btn-sm">View</a>
-{#                <a href="{{ url_for('cases.edit_case', case_id=case.case_id) }}" class="btn btn-outline-warning btn-sm">Edit</a>#}
-{#                <a href="{{ url_for('cases.delete_case', case_id=case.case_id) }}" class="btn btn-outline-danger btn-sm">Delete</a>#}
-            </td>
-        </tr>
-        {% else %}
-        <tr>
-            <td colspan="6">No cases found.</td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
-        </div>
-         </div>
 
 
-{% else %}
-    <h1>Sorry, no victim found</h1>
-{% endif %}
+    {% else %}
+        <h1>Sorry, no victim found</h1>
+    {% endif %}
 
 
 {% endblock content %}
