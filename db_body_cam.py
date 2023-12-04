@@ -89,6 +89,23 @@ class DB_BodyCam:
                 connection.close()
 
     @staticmethod
+    def get_free_body_cams():
+        connection = None
+        cursor = None
+        try:
+            connection = Database.connect_mysql()
+            cursor = connection.cursor(dictionary=True)
+            cursor.execute("SELECT * FROM body_cam WHERE body_cam_id NOT IN (SELECT o.BODY_CAM_body_cam_id from officer o);")
+            return cursor.fetchall()
+        except Exception as e:
+            raise e
+        finally:
+            if cursor is not None:
+                cursor.close()
+            if connection is not None:
+                connection.close()
+
+    @staticmethod
     def get_body_cam_for_officer(officer_id):
         connection = None
         cursor = None
@@ -100,7 +117,7 @@ class DB_BodyCam:
             inner join officer o on b.body_cam_id = o.BODY_CAM_body_cam_id
             where o.officer_id = %s
             ''', (officer_id,))
-            return cursor.fetchall()
+            return cursor.fetchone()
         except Exception as e:
             raise e
         finally:

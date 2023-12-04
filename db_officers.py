@@ -11,11 +11,11 @@ class DB_Officers:
             cursor = connection.cursor()
             cursor.execute(
                 '''
-                INSERT INTO OFFICER (officer_id, name, badge_number, rank , date_of_birth)
-                VALUES (%s, %s, %s, %s ,%s)
+                INSERT INTO OFFICER (officer_id, name, badge_number, rank , date_of_birth, BODY_CAM_body_cam_id)
+                VALUES (%s, %s, %s, %s ,%s, %s)
                 ''',
                 (int(officer["officer_id"]), officer["name"], officer["badge_number"], officer["rank"],
-                 officer["date_of_birth"]))
+                 officer["date_of_birth"], officer['BODY_CAM_body_cam_id']))
             connection.commit()
         except Exception as e:
             raise e
@@ -75,9 +75,15 @@ class DB_Officers:
             cursor.execute(
                 '''
                 UPDATE OFFICER
-                SET name = %s, badge_number = %s, rank = %s, date_of_birth = %s
+                SET name = %s, badge_number = %s,
+                rank = %s, date_of_birth = %s,
+                BODY_CAM_body_cam_id = %s
                 WHERE officer_id = %s''',
-                (officer["name"], officer["badge_number"], officer["rank"], officer["date_of_birth"], int(officer_id)))
+                (officer["name"], officer["badge_number"],
+                 officer["rank"], officer["date_of_birth"],
+                 officer['BODY_CAM_body_cam_id'],
+                 int(officer_id))
+            )
             connection.commit()
         except Exception as e:
             raise e

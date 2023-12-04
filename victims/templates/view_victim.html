@@ -44,7 +44,7 @@
         <a href="{{ url_for('victims.edit_victim', victim_id=victim.victim_id) }}" class="btn btn-warning">Edit</a>
         <a href="{{ url_for('victims.delete_victim', victim_id=victim.victim_id) }}" class="btn btn-danger">Delete</a>
     </div>
-    <a href="{{ url_for('victims.view_victims') }}" class="btn btn-primary">Return to Victims</a>
+{#    <a href="{{ url_for('victims.view_victims') }}" class="btn btn-primary">Return to Victims</a>#}
 </div>
         <br>
          <div class="card">
@@ -74,8 +74,8 @@
             <td>{{ case.OFFICER_officer_id }}</td>
             <td>
                 <a href="{{ url_for('cases.view_case', case_id=case.case_id) }}" class="btn btn-outline-primary btn-sm">View</a>
-                <a href="{{ url_for('cases.edit_case', case_id=case.case_id) }}" class="btn btn-outline-warning btn-sm">Edit</a>
-                <a href="{{ url_for('cases.delete_case', case_id=case.case_id) }}" class="btn btn-outline-danger btn-sm">Delete</a>
+{#                <a href="{{ url_for('cases.edit_case', case_id=case.case_id) }}" class="btn btn-outline-warning btn-sm">Edit</a>#}
+{#                <a href="{{ url_for('cases.delete_case', case_id=case.case_id) }}" class="btn btn-outline-danger btn-sm">Delete</a>#}
             </td>
         </tr>
         {% else %}

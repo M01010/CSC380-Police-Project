@@ -87,7 +87,7 @@
                class="btn btn-warning">Edit</a>
             <a href="{{ url_for('officers.delete_officer', officer_id=officer.officer_id) }}" class="btn btn-danger">Delete</a>
         </div>
-        <a href="{{ url_for('officers.view_officers') }}" class="btn btn-primary">Return to Officers</a>
+{#        <a href="{{ url_for('officers.view_officers') }}" class="btn btn-primary">Return to Officers</a>#}
     </div>
 
     <!-- Cases card -->
@@ -116,10 +116,10 @@
                         <td>
                             <a href="{{ url_for('cases.view_case', case_id=case.case_id) }}"
                                class="btn btn-outline-primary btn-sm">View</a>
-                            <a href="{{ url_for('cases.edit_case', case_id=case.case_id) }}"
-                               class="btn btn-outline-warning btn-sm">Edit</a>
-                            <a href="{{ url_for('cases.delete_case', case_id=case.case_id) }}"
-                               class="btn btn-outline-danger btn-sm">Delete</a>
+{#                            <a href="{{ url_for('cases.edit_case', case_id=case.case_id) }}"#}
+{#                               class="btn btn-outline-warning btn-sm">Edit</a>#}
+{#                            <a href="{{ url_for('cases.delete_case', case_id=case.case_id) }}"#}
+{#                               class="btn btn-outline-danger btn-sm">Delete</a>#}
                         </td>
                     </tr>
                 {% else %}

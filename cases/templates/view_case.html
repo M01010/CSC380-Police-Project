@@ -22,11 +22,13 @@
             <a href="{{ url_for('cases.delete_case', case_id=case.case_id) }}" class="btn btn-danger">Delete</a>
             <a href="{{ url_for('officers.view_officer', officer_id=case.OFFICER_officer_id) }}"
                class="btn btn-outline-primary">View Officer</a>
-            <a href="{{ url_for('victims.add_victim', officer_id=case.OFFICER_officer_id) }}"
-               class="btn btn-outline-primary">Add victim</a>
+            <a href="{{ url_for('cases.edit_case_victims', case_id=case.case_id) }}" class="btn btn-primary">Edit
+                Victims</a>
+            <a href="{{ url_for('cases.edit_case_suspects', case_id=case.case_id) }}" class="btn btn-primary">Edit
+                Suspects</a>
             <div>
                 <br>
-                <a href="{{ url_for('cases.view_cases') }}" class="btn btn-primary">Back to Cases</a>
+                {#                <a href="{{ url_for('cases.view_cases') }}" class="btn btn-primary">Back to Cases</a>#}
             </div>
         </div>
 
@@ -60,10 +62,10 @@
                         <td>
                             <a href="{{ url_for('victims.view_victim', victim_id=victim.victim_id) }}"
                                class="btn btn-outline-primary">View</a>
-                            <a href="{{ url_for('victims.edit_victim', victim_id=victim.victim_id) }}"
-                               class="btn btn-outline-warning">Edit</a>
-{#                            <a href="{{ url_for('victims.delete_victim', victim_id=victim.victim_id) }}"#}
-{#                               class="btn btn-outline-danger">Delete</a>#}
+                            {#                            <a href="{{ url_for('victims.edit_victim', victim_id=victim.victim_id) }}"#}
+                            {#                               class="btn btn-outline-warning">Edit</a>#}
+                            {#                                                        <a href="{{ url_for('victims.delete_victim', victim_id=victim.victim_id) }}"#}
+                            {#                                                           class="btn btn-outline-danger">Delete</a>#}
                         </td>
                     </tr>
                 {% else %}
@@ -75,5 +77,4 @@
             </table>
         </div>
     </div>
-
 {% endblock %}

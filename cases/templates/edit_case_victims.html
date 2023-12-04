@@ -1,5 +1,7 @@
 {% extends "layout.html" %}
 {% block content %}
+    <a href="{{ url_for('cases.view_case', case_id=case_id) }}"
+       class="btn btn-outline-primary">back to case</a>
     <table class="table">
         <thead>
 

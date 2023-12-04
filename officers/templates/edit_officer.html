@@ -19,8 +19,9 @@
 
         <div class="form-group">
             <label for="dobInput">DOB:</label>
-            <input type="date" id="dobInput" name="date_of_birth" value="{{ officer.date_of_birth }}" min={{ constants.minDate }}
-                    max={{ constants.maxDate }} class="form-control"/>
+            <input type="date" id="dobInput" name="date_of_birth" value="{{ officer.date_of_birth }}"
+                   min={{ constants.minDate }}
+                           max={{ constants.maxDate }} class="form-control"/>
         </div>
 
         <div class="mb-3">
@@ -31,6 +32,21 @@
                     {% if rank!= officer.rank %}
                         <option value={{ rank }}>{{ rank }}</option>
                     {% endif %}
+                {% endfor %}
+            </select>
+        </div>
+
+
+        <div class="mb-3">
+            <label for="camInput" class="form-label">Body Cam:</label>
+            <select class="form-select" id="camInput" name="BODY_CAM_body_cam_id" required>
+                <option value={{ officer_body_cam.body_cam_id }}>
+                    id: {{ officer_body_cam.body_cam_id }}, model: {{ officer_body_cam.model }}
+                </option>
+                {% for body_cam in body_cams %}
+                    <option value={{ body_cam.body_cam_id }}>
+                        id: {{ body_cam.body_cam_id }}, model: {{ body_cam.model }}
+                    </option>
                 {% endfor %}
             </select>
         </div>
