@@ -114,6 +114,26 @@ class DB_Officers:
                 connection.close()
 
     @staticmethod
+    def get_officer_by_body_cam_id(body_cam_id):
+        connection = None
+        cursor = None
+        try:
+            connection = Database.connect_mysql()
+            cursor = connection.cursor(dictionary=True)
+            cursor.execute('''
+            SELECT * FROM officer o
+            WHERE o.BODY_CAM_body_cam_id = %s
+            ''', (body_cam_id,))
+            return cursor.fetchone()
+        except Exception as e:
+            raise e
+        finally:
+            if cursor is not None:
+                cursor.close()
+            if connection is not None:
+                connection.close()
+
+    @staticmethod
     def delete_officer(officer_id):
         connection = None
         cursor = None
