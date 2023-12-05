@@ -1,0 +1,48 @@
+{% extends "layout.html" %}
+{% block content %}
+    <header class="mb-3">
+        <div class="container">
+            <h1 class="text-center">All Body Cams</h1>
+        </div>
+    </header>
+
+    <div class="mb-3">
+        <form class="d-flex" role="search" action="#" method="post">
+            <input class="form-control me-2" type="search" name="search" placeholder="Search Body Cams..."
+                   aria-label="Search">
+            <button class="btn btn-outline-success" type="submit">Search</button>
+        </form>
+    </div>
+    <a href="{{ url_for('body_cams.add_body_cam') }}" class="btn btn-primary">Add New Body Cam</a>
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Serial Number</th>
+            <th scope="col">Model</th>
+            <th scope="col">Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for body_cam in all_cams %}
+            <tr>
+                <td>{{ body_cam.body_cam_id }}</td>
+                <td>{{ body_cam.serial_number if body_cam.serial_number != '' else 'No Serial Number' }}</td>
+                <td>{{ body_cam.model if body_cam.model != '' else 'No Model' }}</td>
+                <td>
+                    <a href="{{ url_for('body_cams.view_body_cam', body_cam_id=body_cam.body_cam_id) }}"
+                       class="btn btn-outline-primary btn-sm">View</a>
+                    <a href="{{ url_for('body_cams.edit_body_cam', body_cam_id=body_cam.body_cam_id) }}"
+                       class="btn btn-outline-warning btn-sm">Edit</a>
+                    <a href="{{ url_for('body_cams.delete_body_cam', body_cam_id=body_cam.body_cam_id) }}"
+                       class="btn btn-outline-danger btn-sm">Delete</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">No Body cams found.</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

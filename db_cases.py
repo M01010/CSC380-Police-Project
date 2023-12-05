@@ -121,9 +121,9 @@ class DB_Cases:
             cursor = connection.cursor(dictionary=True)
             cursor.execute('''
             SELECT c.* FROM `CASE` c
-            inner join affected_in a on c.case_id = a.CASE_case_id
+            inner join accused_in a on c.case_id = a.CASE_case_id
             inner join suspect s on s.suspect_id = a.SUSPECT_suspect_id
-            where v.victim_id = %s
+            where s.suspect_id = %s
             ''', (suspect_id,))
             return cursor.fetchall()
         except Exception as e:

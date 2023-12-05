@@ -1,0 +1,36 @@
+{% extends "layout.html" %}
+{% block content %}
+    <header class="mb-3">
+        <div class="container">
+            <h1 class="text-center">Video Details</h1>
+        </div>
+    </header>
+
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title"><strong>Video ID:</strong> {{ video.video_id }}</h5>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item"><strong>Link:</strong> <a href="{{ video.link }}" target="_blank">{{ video.link }}</a></li>
+                <li class="list-group-item"><strong>Size:</strong> {{ video.size }} MB</li>
+                <li class="list-group-item"><strong>Recording Date:</strong> {{ video.recording_date }}</li>
+                <li class="list-group-item"><strong>Associated Body Cam:</strong> {{ body_cam.body_cam_id }} - {{ body_cam.model }} - {{ body_cam.serial_number }}</li>
+            </ul>
+        </div>
+        <div class="card-body">
+            <a href="{{ url_for('videos.edit_video', video_id=video.video_id) }}" class="btn btn-warning">Edit Video</a>
+            <a href="{{ url_for('videos.delete_video', video_id=video.video_id) }}" class="btn btn-danger">Delete Video</a>
+        </div>
+    </div>
+
+    <!-- Optionally, embed the video if it's viewable -->
+    {% if video.link %}
+        <div class="card mt-4">
+            <div class="card-body">
+                <h5 class="card-title">Video Preview</h5>
+                <!-- Example for embedding a video - modify as necessary -->
+                <iframe src="{{ video.link }}" width="100%" height="400px" frameborder="0" allowfullscreen></iframe>
+            </div>
+        </div>
+    {% endif %}
+
+{% endblock %}

@@ -59,8 +59,8 @@
             Suspects
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdownSuspects">
-            <li><a class="dropdown-item" href="{{ url_for('home') }}">Show All Suspects</a></li>
-            <li><a class="dropdown-item" href="{{ url_for('home') }}">Add Suspect</a></li>
+            <li><a class="dropdown-item" href="{{ url_for('suspects.view_suspects') }}">Show All Suspects</a></li>
+            <li><a class="dropdown-item" href="{{ url_for('suspects.add_suspect') }}">Add Suspect</a></li>
           </ul>
         </li>
 
@@ -70,8 +70,8 @@
             Body Cams
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdownBodyCams">
-            <li><a class="dropdown-item" href="{{ url_for('home') }}">Show All Body Cams</a></li>
-            <li><a class="dropdown-item" href="{{ url_for('home') }}">Add Body Cam</a></li>
+            <li><a class="dropdown-item" href="{{ url_for('body_cams.view_body_cams') }}">Show All Body Cams</a></li>
+            <li><a class="dropdown-item" href="{{ url_for('body_cams.add_body_cam') }}">Add Body Cam</a></li>
           </ul>
         </li>
 
@@ -81,8 +81,8 @@
             Videos
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdownVideos">
-            <li><a class="dropdown-item" href="{{ url_for('home') }}">Show All Videos</a></li>
-            <li><a class="dropdown-item" href="{{ url_for('home') }}">Add Video</a></li>
+            <li><a class="dropdown-item" href="{{ url_for('videos.view_videos') }}">Show All Videos</a></li>
+            <li><a class="dropdown-item" href="{{ url_for('videos.add_video') }}">Add Video</a></li>
           </ul>
         </li>
 

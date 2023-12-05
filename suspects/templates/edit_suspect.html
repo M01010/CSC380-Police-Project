@@ -1,0 +1,33 @@
+{% extends "layout.html" %}
+{% block content %}
+        <header class="mb-4">
+            <div class="container">
+                <h1 class="text-center">edit Suspect</h1>
+            </div>
+        </header>
+
+        <form action="#" method="post">
+
+            <div class="mb-3">
+                <label for="nameInput" class="form-label">Name:</label>
+                <input type="text" class="form-control" id="nameInput" name="name" placeholder="Enter Name"
+                       value="{{ suspect.name }}">
+
+                <div class="form-group">
+                    <label for="dobInput">DOB:</label>
+                    <input type="date" id="dobInput" name="date_of_birth"
+                           value="{{ suspect.date_of_birth }}" min={{ constants.minDate }}
+                                   max={{ constants.maxDate }} class="form-control"/>
+                </div>
+
+
+<br>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+        </form>
+
+{#        <div class="mt-4">#}
+{#            <a href="{{ url_for('home') }}" class="btn btn-secondary">Add New Case</a>#}
+{#        </div>#}
+
+{% endblock content %}

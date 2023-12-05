@@ -12,10 +12,14 @@
             <ul class="list-group list-group-flush">
                 <li class="list-group-item"><strong>ID:</strong> {{ case.case_id }}</li>
                 <li class="list-group-item">
-                    <strong>Description: </strong>{{ case.description if case.description != '' else 'No Case description' }}</li>
-                <li class="list-group-item"><strong>Type:</strong> {{ case.case_type if case.case_type != '' else 'No Case type' }}</li>
-                <li class="list-group-item"><strong>Status:</strong> {{ case.status if case.status != '' else 'No Case status' }}</li>
-                <li class="list-group-item"><strong>Date Reported:</strong> {{ case.date_reported if case.date_reported != '' else 'No Case date' }}
+                    <strong>Description: </strong>{{ case.description if case.description != '' else 'No Case description' }}
+                </li>
+                <li class="list-group-item">
+                    <strong>Type:</strong> {{ case.case_type if case.case_type != '' else 'No Case type' }}</li>
+                <li class="list-group-item">
+                    <strong>Status:</strong> {{ case.status if case.status != '' else 'No Case status' }}</li>
+                <li class="list-group-item"><strong>Date
+                    Reported:</strong> {{ case.date_reported if case.date_reported != '' else 'No Case date' }}
                 </li>
             </ul>
         </div>
@@ -76,6 +80,48 @@
                 {% else %}
                     <tr>
                         <td colspan="6">No victims found.</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+    <br>
+
+    <div class="card">
+        <div class="card-header">
+           <h5 class="card-title">Suspects accused in case: </h5>
+        </div>
+        <div class="card-body">
+
+            <table class="table">
+                <thead>
+
+                <tr>
+                    <th scope="col">Suspect ID</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">DOB</th>
+                    <th scope="col">Actions</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                {% for suspect in suspects %}
+                    <tr>
+                        <td>{{ suspect.suspect_id }}</td>
+                        <td>{{ suspect.name if suspect.name != '' else  'No name' }}</td>
+                        <td>{{ suspect.date_of_birth if suspect.date_of_birth != '' else  'No DOB' }}</td>
+
+                        <td>
+                            <a href="{{ url_for('suspects.view_suspect', suspect_id=suspect.suspect_id) }}"
+                               class="btn btn-outline-primary">View suspect</a>
+
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="6">No suspects found.</td>
                     </tr>
                 {% endfor %}
                 </tbody>

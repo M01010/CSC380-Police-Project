@@ -22,8 +22,9 @@ def view_cases():
 def view_case(case_id):
     try:
         case = DB_Cases.get_case(case_id)
+        suspects = DB_Suspects.get_suspects_by_case(case_id)
         victims = DB_Victims.get_victims_by_case(case_id)
-        return render_template('view_case.html', case=case, victims=victims)
+        return render_template('view_case.html', case=case, victims=victims, suspects=suspects)
     except Exception as e:
         flash(f"Error: {e}", "danger")
         return redirect(url_for('cases.view_cases'))

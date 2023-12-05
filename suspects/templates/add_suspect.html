@@ -1,0 +1,64 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    <header class="mb-4">
+        <div class="container">
+            <h1 class="text-center">Add Suspect</h1>
+        </div>
+    </header>
+
+    <form action="#" method="post">
+        <div class="mb-3">
+            <label for="idInput" class="form-label">Suspect ID:</label>
+            <input type="number" min="0" class="form-control" id="idInput" name="suspect_id" placeholder="Enter Suspect ID"
+                   required>
+        </div>
+        <div class="mb-3">
+            <label for="nameInput" class="form-label">Name:</label>
+            <input type="text" class="form-control" id="nameInput" name="name" placeholder="Enter Name" required>
+        </div>
+
+        <div class="form-group">
+            <label for="dobInput">DOB:</label>
+            <input type="date" id="dobInput" name="date_of_birth"
+                   min="{{ constants.minDate }}" max="{{ constants.maxDate }}"
+                   class="form-control"/>
+        </div>
+
+
+{#        <!-- Additional fields specific to the suspect -->#}
+{#        <div class="mb-3">#}
+{#            <label for="aliasInput" class="form-label">Alias:</label>#}
+{#            <input type="text" class="form-control" id="aliasInput" name="alias" placeholder="Enter Alias">#}
+{#        </div>#}
+{##}
+{#        <div class="mb-3">#}
+{#            <label for="knownAssociatesInput" class="form-label">Known Associates:</label>#}
+{#            <input type="text" class="form-control" id="knownAssociatesInput" name="known_associates"#}
+{#                   placeholder="Enter Known Associates">#}
+{#        </div>#}
+
+{#        <!-- Optionally, you can include a dropdown to select related cases, similar to the commented case selection in add_victim.html -->#}
+{#        <!--#}
+{#        <div class="mb-3">#}
+{#            <label for="caseSelect" class="form-label">Related Case:</label>#}
+{#            <select class="form-select" id="caseSelect" name="case_id">#}
+{#                <option value="">Select Case</option>#}
+{#                {% for case in cases %}#}
+{#                    <option value="{{ case.id }}">{{ case.id }}</option>#}
+{#                {% endfor %}#}
+{#            </select>#}
+{#        </div>#}
+{#        -->#}
+{##}
+        <br>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+{##}
+{#    <!-- Optional link to add a new case or return to home -->#}
+{#    <!--#}
+{#    <div class="mt-4">#}
+{#        <a href="{{ url_for('cases.add_case') }}" class="btn btn-secondary">Add New Case</a>#}
+{#    </div>#}
+{#    -->#}
+{% endblock content %}

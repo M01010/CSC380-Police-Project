@@ -1,0 +1,50 @@
+{% extends "layout.html" %}
+{% block content %}
+    <header class="mb-4">
+        <div class="container">
+            <h1 class="text-center">Edit Video Details</h1>
+        </div>
+    </header>
+
+    <form action="{{ url_for('videos.edit_video', video_id=video.video_id) }}" method="post">
+        <div class="mb-3">
+            <label for="videoId" class="form-label">Video ID:</label>
+            <input type="number" class="form-control" id="videoId" name="video_id"
+                   value="{{ video.video_id }}" required readonly>
+        </div>
+
+        <div class="mb-3">
+            <label for="videoLink" class="form-label">Video Link:</label>
+            <input type="text" class="form-control" id="videoLink" name="link"
+                   value="{{ video.link }}" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="videoSize" class="form-label">Size (MB):</label>
+            <input type="number" class="form-control" id="videoSize" name="size"
+                   value="{{ video.size }}" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="recordingDate" class="form-label">Recording Date:</label>
+            <input type="date" class="form-control" id="recordingDate" name="recording_date"
+                   value="{{ video.recording_date }}" required>
+        </div>
+
+
+        <div class="mb-3">
+            <label for="bodyCamSelect" class="form-label">Associated Body Cam:</label>
+            <select class="form-select" id="bodyCamSelect" name="BODY_CAM_body_cam_id" required>
+                <option value="{{ body_cam.body_cam_id }}" selected>{{ body_cam.model }}
+                    - {{ body_cam.serial_number }}</option>
+                {% for cam in body_cams %}
+                    {% if cam.body_cam_id != body_cam.body_cam_id %}
+                        <option value="{{ cam.body_cam_id }}">{{ cam.model }} - {{ cam.serial_number }}</option>
+                    {% endif %}
+                {% endfor %}
+            </select>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Update</button>
+    </form>
+{% endblock %}

@@ -8,21 +8,27 @@
 
     <div class="card mb-3">
         <div class="card-body">
-            <h5 class="card-title">{{ officer.name if officer.name != '' else 'No name' }}</h5>
+            <h5 class="card-title"><strong>{{ officer.name if officer.name != '' else 'No name' }}</strong></h5>
             <p class="card-text">Additional details about the officer.</p>
             <ul class="list-group list-group-flush">
-                <li class="list-group-item">ID: {{ officer.officer_id }}</li>
-                <li class="list-group-item">Badge
-                    Number: {{ officer.badge_number if officer.badge_number != '' else 'No Badge number' }}</li>
+                <li class="list-group-item"><strong>ID:</strong> {{ officer.officer_id }}</li>
+                <li class="list-group-item"><strong>Badge
+                    Number:</strong> {{ officer.badge_number if officer.badge_number != '' else 'No Badge number' }}</li>
                 <li class="list-group-item">
-                    DOB: {{ officer.date_of_birth if officer.date_of_birth != '' else 'No DOB' }}</li>
-                <li class="list-group-item">Rank: {{ officer.rank if officer.rank != '' else 'No rank' }}</li>
+                    <strong>DOB:</strong> {{ officer.date_of_birth if officer.date_of_birth != '' else 'No DOB' }}</li>
+                <li class="list-group-item"><strong>Rank:</strong> {{ officer.rank if officer.rank != '' else 'No rank' }}</li>
             </ul>
+        </div>
+        <div class="card-body">
+            <span class="card-text"><strong>Body cam ID:</strong> {{ officer.BODY_CAM_body_cam_id }}</span>
+            <a href="{{ url_for('body_cams.view_body_cam', body_cam_id=officer.BODY_CAM_body_cam_id) }}"
+               class="btn btn-outline-primary">View Body cam</a>
         </div>
         <div class="card-body">
             <a href="{{ url_for('officers.edit_officer', officer_id=officer.officer_id) }}"
                class="btn btn-warning">Edit</a>
             <a href="{{ url_for('officers.delete_officer', officer_id=officer.officer_id) }}" class="btn btn-danger">Delete</a>
+
         </div>
         {#        <a href="{{ url_for('officers.view_officers') }}" class="btn btn-primary">Return to Officers</a>#}
     </div>

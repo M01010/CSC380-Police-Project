@@ -31,15 +31,13 @@ class DB_BodyCam:
         try:
             connection = Database.connect_mysql()
             cursor = connection.cursor()
-            query = ('''
+
+            cursor.execute('''
             UPDATE body_cam
             SET serial_number = %s, model = %s
             WHERE body_cam_id = %s
-            ''')
-            cursor.execute(query,
-                           ((bc_data["body_cam_id"], bc_data["serial_number"],
-                             bc_data["model"]),
-                            bc_id))
+            ''', (bc_data["serial_number"], bc_data["model"], bc_id))
+
             connection.commit()
         except Exception as e:
             raise e
@@ -58,7 +56,7 @@ class DB_BodyCam:
             cursor = connection.cursor(dictionary=True)
             cursor.execute('''
             SELECT * FROM `body_cam`
-            WHERE case_id = %s''', (bc_id,))
+            WHERE body_cam_id = %s''', (bc_id,))
             rs = cursor.fetchone()
             if rs is None:
                 raise Exception(f'body cam ID {bc_id} does not exist')
@@ -95,7 +93,8 @@ class DB_BodyCam:
         try:
             connection = Database.connect_mysql()
             cursor = connection.cursor(dictionary=True)
-            cursor.execute("SELECT * FROM body_cam WHERE body_cam_id NOT IN (SELECT o.BODY_CAM_body_cam_id from officer o);")
+            cursor.execute(
+                "SELECT * FROM body_cam WHERE body_cam_id NOT IN (SELECT o.BODY_CAM_body_cam_id from officer o);")
             return cursor.fetchall()
         except Exception as e:
             raise e
