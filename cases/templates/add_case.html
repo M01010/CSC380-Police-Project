@@ -10,8 +10,20 @@
 
         <div class="mb-3">
             <label for="caseIdInput" class="form-label">Case ID:</label>
-            <input type="number" class="form-control" id="caseIdInput" name="case_id" placeholder="Enter Case ID"
+            <input type="number" min="0" class="form-control" id="caseIdInput" name="case_id"
+                   placeholder="Enter Case ID"
                    required>
+        </div>
+
+        <div class="mb-3">
+            <label for="caseName" class="form-label">Case name:</label>
+            <input class="form-control" id="caseName" name="name" placeholder="Enter Case Name"
+            >
+        </div>
+        <div class="mb-3">
+            <label for="caseDes" class="form-label">Case Description:</label>
+            <input class="form-control" id="caseDes" name="description" placeholder="Enter Case Description"
+            >
         </div>
 
         <div class="mb-3">

@@ -1,15 +1,15 @@
 from database import Database
 
 
-class DB_Victims:
+class DB_Suspects:
     @staticmethod
-    def get_victims():
+    def get_suspects():
         connection = None
         cursor = None
         try:
             connection = Database.connect_mysql()
             cursor = connection.cursor(dictionary=True)
-            cursor.execute('SELECT * FROM VICTIM')
+            cursor.execute('SELECT * FROM suspect')
             return cursor.fetchall()
         except Exception as e:
             raise e
@@ -20,19 +20,19 @@ class DB_Victims:
                 connection.close()
 
     @staticmethod
-    def get_victim(victim_id):
+    def get_suspect(suspect_id):
         connection = None
         cursor = None
         try:
             connection = Database.connect_mysql()
             cursor = connection.cursor(dictionary=True)
             cursor.execute('''
-            SELECT * FROM VICTIM
-            WHERE victim_id = %s
-            ''', (victim_id,))
+            SELECT * FROM suspect
+            WHERE suspect_id = %s
+            ''', (suspect_id,))
             rs = cursor.fetchone()
             if rs is None:
-                raise Exception(f'Victim ID {victim_id} does not exist')
+                raise Exception(f'Suspect ID {suspect_id} does not exist')
             return rs
         except Exception as e:
             raise e
@@ -43,15 +43,15 @@ class DB_Victims:
                 connection.close()
 
     @staticmethod
-    def get_victims_by_case(case_id):
+    def get_suspects_by_case(case_id):
         connection = None
         cursor = None
         try:
             connection = Database.connect_mysql()
             cursor = connection.cursor(dictionary=True)
             cursor.execute('''
-            SELECT v.* FROM victim v
-            INNER JOIN affected_in a ON v.victim_id = a.VICTIM_victim_id
+            SELECT s.* FROM suspect s
+            INNER JOIN accused_in a ON s.suspect_id = a.SUSPECT_suspect_id
             INNER JOIN `case` c ON a.CASE_case_id = c.case_id
             WHERE c.case_id = %s
             ''', (case_id,))
@@ -65,19 +65,19 @@ class DB_Victims:
                 connection.close()
 
     @staticmethod
-    def get_victims_not_in_case(case_id):
+    def get_suspects_not_in_case(case_id):
         connection = None
         cursor = None
         try:
             connection = Database.connect_mysql()
             cursor = connection.cursor(dictionary=True)
             cursor.execute('''
-            SELECT v1.*
-            FROM victim v1
+            SELECT s1.*
+            FROM suspect s1
             EXCEPT
-            SELECT v2.*
-            FROM victim v2
-            INNER JOIN affected_in a ON v2.victim_id = a.VICTIM_victim_id
+            SELECT s2.*
+            FROM suspect s2
+            INNER JOIN accused_in a ON s2.suspect_id = a.SUSPECT_suspect_id
             WHERE a.CASE_case_id = %s
             ''', (case_id,))
             return cursor.fetchall()
@@ -90,15 +90,15 @@ class DB_Victims:
                 connection.close()
 
     @staticmethod
-    def get_victims_by_name(name):
+    def get_suspects_by_name(name):
         connection = None
         cursor = None
         try:
             connection = Database.connect_mysql()
             cursor = connection.cursor(dictionary=True)
             cursor.execute(f'''
-            SELECT * FROM victim v
-            WHERE v.name like "%{name}%"
+            SELECT * FROM suspect s
+            WHERE s.name like "%{name}%"
             ''')
             return cursor.fetchall()
         except Exception as e:
@@ -110,7 +110,7 @@ class DB_Victims:
                 connection.close()
 
     @staticmethod
-    def add_victim(victim):
+    def add_suspect(suspect):
         connection = None
         cursor = None
         try:
@@ -119,10 +119,10 @@ class DB_Victims:
             cursor = connection.cursor()
             cursor.execute(
                 '''
-                INSERT INTO VICTIM (victim_id, name, date_of_birth, contact_info)
-                VALUES (%s, %s, %s, %s)
+                INSERT INTO suspect (suspect_id, name, date_of_birth)
+                VALUES (%s, %s, %s)
                 ''',
-                (int(victim['victim_id']), victim["name"], victim["date_of_birth"], victim["contact_info"]))
+                (int(suspect['suspect_id']), suspect["name"], suspect["date_of_birth"]))
             connection.commit()
         except Exception as e:
             raise e
@@ -133,15 +133,15 @@ class DB_Victims:
                 connection.close()
 
     @staticmethod
-    def add_victim_to_case(victim_id, case_id):
+    def add_suspect_to_case(suspect_id, case_id):
         connection = None
         cursor = None
         try:
             connection = Database.connect_mysql()
             cursor = connection.cursor(dictionary=True)
             cursor.execute('''
-                INSERT INTO affected_in (VICTIM_victim_id, CASE_case_id) VALUES (%s, %s)
-            ''', (victim_id, case_id))
+                INSERT INTO accused_in (SUSPECT_suspect_id, CASE_case_id) VALUES (%s, %s)
+            ''', (suspect_id, case_id))
             connection.commit()
         except Exception as e:
             raise e
@@ -152,19 +152,19 @@ class DB_Victims:
                 connection.close()
 
     @staticmethod
-    def delete_victim_from_case(victim_id, case_id):
+    def delete_suspect_from_case(suspect_id, case_id):
         connection = None
         cursor = None
         try:
             connection = Database.connect_mysql()
             cursor = connection.cursor(dictionary=True)
             cursor.execute('''
-                DELETE FROM affected_in
+                DELETE FROM accused_in
                 WHERE
-                VICTIM_victim_id = %s
+                SUSPECT_suspect_id = %s
                 AND
                 CASE_case_id = %s
-            ''', (victim_id, case_id))
+            ''', (suspect_id, case_id))
             connection.commit()
         except Exception as e:
             raise e
@@ -175,7 +175,7 @@ class DB_Victims:
                 connection.close()
 
     @staticmethod
-    def edit_victim(victim_id, victim):
+    def edit_suspect(suspect_id, suspect):
         connection = None
         cursor = None
         try:
@@ -183,10 +183,10 @@ class DB_Victims:
             cursor = connection.cursor()
             cursor.execute(
                 '''
-                UPDATE VICTIM
-                SET name = %s, date_of_birth = %s, contact_info = %s
-                WHERE victim_id = %s''',
-                (victim["name"], victim["date_of_birth"], victim["contact_info"], int(victim_id)))
+                UPDATE suspect
+                SET name = %s, date_of_birth = %s
+                WHERE suspect_id = %s''',
+                (suspect["name"], suspect["date_of_birth"], int(suspect_id)))
             connection.commit()
         except Exception as e:
             raise e
@@ -197,15 +197,15 @@ class DB_Victims:
                 connection.close()
 
     @staticmethod
-    def delete_victim(victim_id):
+    def delete_suspect(suspect_id):
         connection = None
         cursor = None
         try:
             connection = Database.connect_mysql()
             cursor = connection.cursor()
             cursor.execute('''
-            DELETE FROM VICTIM
-            WHERE victim_id = %s''', (victim_id,))
+            DELETE FROM suspect
+            WHERE suspect_id = %s''', (suspect_id,))
             connection.commit()
         except Exception as e:
             raise e

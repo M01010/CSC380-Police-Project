@@ -7,51 +7,125 @@
     </header>
     <div class="card">
         <div class="card-body">
-            <h5 class="card-title">Case ID: {{ case.case_id }}</h5>
-            <p class="card-text"><strong>Type:</strong> {{ case.case_type }}</p>
-            <p class="card-text"><strong>Status:</strong> {{ case.status }}</p>
-            <p class="card-text"><strong>Date Reported:</strong> {{ case.date_reported }}</p>
-            <p class="card-text"><strong>Officer ID:</strong> {{ case.OFFICER_officer_id }}</p>
-            <!-- Add more case details here if necessary -->
+            <h5 class="card-title"><strong>Name:</strong> {{ case.name if case.name != '' else 'No Case name' }}</h5>
+            <p class="card-text">Additional details about the case.</p>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item"><strong>ID:</strong> {{ case.case_id }}</li>
+                <li class="list-group-item">
+                    <strong>Description: </strong>{{ case.description if case.description != '' else 'No Case description' }}
+                </li>
+                <li class="list-group-item">
+                    <strong>Type:</strong> {{ case.case_type if case.case_type != '' else 'No Case type' }}</li>
+                <li class="list-group-item">
+                    <strong>Status:</strong> {{ case.status if case.status != '' else 'No Case status' }}</li>
+                <li class="list-group-item"><strong>Date
+                    Reported:</strong> {{ case.date_reported if case.date_reported != '' else 'No Case date' }}
+                </li>
+            </ul>
         </div>
         <div class="card-body">
-            <a href="{{ url_for('cases.edit_case', case_id=case.case_id) }}" class="btn btn-warning">Edit</a>
-            <a href="{{ url_for('cases.delete_case', case_id=case.case_id) }}" class="btn btn-danger">Delete</a>
-            <a href="{{ url_for('officers.view_officer', officer_id=case.OFFICER_officer_id) }}" class="btn btn-outline-primary">View Officer</a>
+            <span class="card-text"><strong>Officer ID:</strong> {{ case.OFFICER_officer_id }}</span>
+            <a href="{{ url_for('officers.view_officer', officer_id=case.OFFICER_officer_id) }}"
+               class="btn btn-outline-primary">View Officer</a>
         </div>
-        <a href="{{ url_for('cases.view_cases') }}" class="btn btn-primary">Back to Cases</a>
+        <div class="card-body">
+            <a href="{{ url_for('cases.edit_case', case_id=case.case_id) }}" class="btn btn-warning">Edit Case</a>
+            <a href="{{ url_for('cases.edit_case_victims', case_id=case.case_id) }}" class="btn btn-primary">Edit
+                Victims</a>
+            <a href="{{ url_for('cases.edit_case_suspects', case_id=case.case_id) }}" class="btn btn-primary">Edit
+                Suspects</a>
+            <a href="{{ url_for('cases.delete_case', case_id=case.case_id) }}" class="btn btn-danger">Delete Case</a>
+            <div>
+                <br>
+                {#                <a href="{{ url_for('cases.view_cases') }}" class="btn btn-primary">Back to Cases</a>#}
+            </div>
+        </div>
+
     </div>
-    <table class="table">
-        <thead>
-        <tr>
-            <th scope="col">Victim ID</th>
-            <th scope="col">Name</th>
-            <th scope="col">DOB</th>
-            <th scope="col">Contact info</th>
-            <th scope="col">Actions</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for victim in victims %}
-            <tr>
-                <td>ID: {{ victim.victim_id }}</td>
-                <td>{{ victim.name }}</td>
-                <td>DOB: {{ victim.date_of_birth }}</td>
-                <td>Contact: {{ victim.contact_info }}</td>
-                <td>
-                    <a href="{{ url_for('victims.view_victim', victim_id=victim.victim_id) }}"
-                       class="btn btn-outline-primary">View</a>
-                    <a href="{{ url_for('victims.edit_victim', victim_id=victim.victim_id) }}"
-                       class="btn btn-outline-warning">Edit</a>
-                    <a href="{{ url_for('victims.delete_victim', victim_id=victim.victim_id) }}"
-                       class="btn btn-outline-danger">Delete</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="6">No victims found.</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+    <br>
+    <div class="card">
+        <div class="card-header">
+            <h5 class="card-title">Victims affected in case: </h5>
+        </div>
+        <div class="card-body">
+
+            <table class="table">
+                <thead>
+
+                <tr>
+                    <th scope="col">Victim ID</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">DOB</th>
+                    <th scope="col">Contact info</th>
+                    <th scope="col">Actions</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                {% for victim in victims %}
+                    <tr>
+                        <td>{{ victim.victim_id }}</td>
+                        <td>{{ victim.name if victim.name != '' else  'No name' }}</td>
+                        <td>{{ victim.date_of_birth if victim.date_of_birth != '' else  'No DOB' }}</td>
+                        <td>{{ victim.contact_info if victim.contact_info != '' else 'No contact' }}</td>
+                        <td>
+                            <a href="{{ url_for('victims.view_victim', victim_id=victim.victim_id) }}"
+                               class="btn btn-outline-primary">View Victim</a>
+                            {#                            <a href="{{ url_for('victims.edit_victim', victim_id=victim.victim_id) }}"#}
+                            {#                               class="btn btn-outline-warning">Edit</a>#}
+                            {#                                                        <a href="{{ url_for('victims.delete_victim', victim_id=victim.victim_id) }}"#}
+                            {#                                                           class="btn btn-outline-danger">Delete</a>#}
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="6">No victims found.</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+    <br>
+
+    <div class="card">
+        <div class="card-header">
+           <h5 class="card-title">Suspects accused in case: </h5>
+        </div>
+        <div class="card-body">
+
+            <table class="table">
+                <thead>
+
+                <tr>
+                    <th scope="col">Suspect ID</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">DOB</th>
+                    <th scope="col">Actions</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                {% for suspect in suspects %}
+                    <tr>
+                        <td>{{ suspect.suspect_id }}</td>
+                        <td>{{ suspect.name if suspect.name != '' else  'No name' }}</td>
+                        <td>{{ suspect.date_of_birth if suspect.date_of_birth != '' else  'No DOB' }}</td>
+
+                        <td>
+                            <a href="{{ url_for('suspects.view_suspect', suspect_id=suspect.suspect_id) }}"
+                               class="btn btn-outline-primary">View suspect</a>
+
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="6">No suspects found.</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
 {% endblock %}

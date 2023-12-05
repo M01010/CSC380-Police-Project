@@ -1,0 +1,45 @@
+{% extends "layout.html" %}
+{% block content %}
+    <header class="mb-4">
+        <div class="container">
+            <h1 class="text-center">Add New Video</h1>
+        </div>
+    </header>
+
+    <form action="{{ url_for('videos.add_video') }}" method="post">
+        <div class="mb-3">
+            <label for="videoId" class="form-label">Video ID:</label>
+            <input type="number" class="form-control" id="videoId" name="video_id"
+                   placeholder="Enter Video ID" required min="0">
+        </div>
+
+        <div class="mb-3">
+            <label for="videoLink" class="form-label">Video Link:</label>
+            <input type="text" class="form-control" id="videoLink" name="link"
+                   placeholder="Enter Video Link" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="videoSize" class="form-label">Size (MB):</label>
+            <input type="number" class="form-control" id="videoSize" name="size"
+                   placeholder="Enter Video Size" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="recordingDate" class="form-label">Recording Date:</label>
+            <input type="date" class="form-control" id="recordingDate" name="recording_date" required max={{ constants.maxDate }} min={{ constants.minDate }}>
+        </div>
+
+        <div class="mb-3">
+            <label for="bodyCamSelect" class="form-label">Associated Body Cam:</label>
+            <select class="form-select" id="bodyCamSelect" name="BODY_CAM_body_cam_id" required>
+                <option value="">Select a Body Cam</option>
+                {% for body_cam in body_cams %}
+                    <option value="{{ body_cam.body_cam_id }}">{{ body_cam.model }} - {{ body_cam.serial_number }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+{% endblock %}

@@ -1,9 +1,8 @@
 {% extends "layout.html" %}
 {% block content %}
-    {% if victim %}
         <header class="mb-4">
             <div class="container">
-                <h1 class="text-center">edit Victim</h1>
+                <h1 class="text-center">edit Suspect</h1>
             </div>
         </header>
 
@@ -12,21 +11,17 @@
             <div class="mb-3">
                 <label for="nameInput" class="form-label">Name:</label>
                 <input type="text" class="form-control" id="nameInput" name="name" placeholder="Enter Name"
-                       value="{{ victim.name }}">
+                       value="{{ suspect.name }}">
 
                 <div class="form-group">
                     <label for="dobInput">DOB:</label>
                     <input type="date" id="dobInput" name="date_of_birth"
-                           value="{{ victim.date_of_birth }}" min={{ constants.minDate }}
+                           value="{{ suspect.date_of_birth }}" min={{ constants.minDate }}
                                    max={{ constants.maxDate }} class="form-control"/>
                 </div>
 
 
-                <div class="mb-3">
-                    <label for="contactInput" class="form-label">Contact Info:</label>
-                    <input type="text" class="form-control" id="contactInput" name="contact_info"
-                           placeholder="Enter Contact Info" value="{{ victim.contact_info }}">
-                </div>
+<br>
                 <button type="submit" class="btn btn-primary">Submit</button>
             </div>
         </form>
@@ -35,7 +30,4 @@
 {#            <a href="{{ url_for('home') }}" class="btn btn-secondary">Add New Case</a>#}
 {#        </div>#}
 
-    {% else %}
-        <h1>sorry, no victim found</h1>
-    {% endif %}
 {% endblock content %}

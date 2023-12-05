@@ -1,0 +1,50 @@
+{% extends "layout.html" %}
+{% block content %}
+    <header class="mb-3">
+        <div class="container">
+            <h1 class="text-center">All Videos</h1>
+        </div>
+    </header>
+
+{#    <div class="mb-3">#}
+{#        <form class="d-flex" role="search" action="{{ url_for('videos.search_videos') }}" method="post">#}
+{#            <input class="form-control me-2" type="search" name="search" placeholder="Search Videos..."#}
+{#                   aria-label="Search">#}
+{#            <button class="btn btn-outline-success" type="submit">Search</button>#}
+{#        </form>#}
+{#    </div>#}
+    <a href="{{ url_for('videos.add_video') }}" class="btn btn-primary">Add New Video</a>
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Link</th>
+            <th scope="col">Size (MB)</th>
+            <th scope="col">Recording Date</th>
+            <th scope="col">Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for video in all_videos %}
+            <tr>
+                <td>{{ video.video_id }}</td>
+                <td><a href="{{ video.link }}" target="_blank">{{ video.link }}</a></td>
+                <td>{{ video.size }}</td>
+                <td>{{ video.recording_date }}</td>
+                <td>
+                    <a href="{{ url_for('videos.view_video', video_id=video.video_id) }}"
+                       class="btn btn-outline-primary btn-sm">View</a>
+                    <a href="{{ url_for('videos.edit_video', video_id=video.video_id) }}"
+                       class="btn btn-outline-warning btn-sm">Edit</a>
+                    <a href="{{ url_for('videos.delete_video', video_id=video.video_id) }}"
+                       class="btn btn-outline-danger btn-sm">Delete</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">No videos found.</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

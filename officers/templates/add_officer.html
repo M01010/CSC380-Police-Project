@@ -9,8 +9,8 @@
     <form action="{{ url_for('officers.add_officer') }}" method="post">
         <div class="mb-3">
             <label for="officerIdInput" class="form-label">Officer ID:</label>
-            <input type="text" class="form-control" id="officerIdInput" name="officer_id"
-                   placeholder="Enter Officer ID">
+            <input type="number" min="0" class="form-control" id="officerIdInput" name="officer_id"
+                   placeholder="Enter Officer ID" required>
         </div>
         <div class="mb-3">
             <label for="nameInput" class="form-label">Name:</label>
@@ -18,7 +18,7 @@
         </div>
         <div class="mb-3">
             <label for="badgeNumberInput" class="form-label">Badge Number:</label>
-            <input type="text" class="form-control" id="badgeNumberInput" name="badge_number"
+            <input type="number" class="form-control" id="badgeNumberInput" name="badge_number" min="0" required
                    placeholder="Enter Badge Number">
         </div>
 
@@ -39,6 +39,16 @@
                 <option value="">Select Rank</option>
                 {% for rank in constants.officer_ranks %}
                     <option value={{ rank }}>{{ rank }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+
+        <div class="mb-3">
+            <label for="camInput" class="form-label">Body Cam:</label>
+            <select class="form-select" id="camInput" name="BODY_CAM_body_cam_id" required>
+                {% for body_cam in body_cams %}
+                    <option value={{ body_cam.body_cam_id }}>id: {{ body_cam.body_cam_id }}, model: {{ body_cam.model }}</option>
                 {% endfor %}
             </select>
         </div>

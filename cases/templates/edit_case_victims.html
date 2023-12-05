@@ -1,0 +1,74 @@
+{% extends "layout.html" %}
+{% block content %}
+    <a href="{{ url_for('cases.view_case', case_id=case_id) }}"
+       class="btn btn-primary">back to case</a>
+    <table class="table">
+        <thead>
+
+        <tr>
+            <th scope="col">Victim ID</th>
+            <th scope="col">Name</th>
+            <th scope="col">DOB</th>
+            <th scope="col">Contact info</th>
+            <th scope="col">Actions</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        {% for victim in victims %}
+            <tr>
+                <td>{{ victim.victim_id }}</td>
+                <td>{{ victim.name if victim.name != '' else 'No name' }}</td>
+                <td>{{ victim.date_of_birth if victim.date_of_birth != '' else 'No DOB' }}</td>
+                <td>{{ victim.contact_info if victim.contact_info != '' else 'No contact' }}</td>
+                <td>
+                    <form action="{{ url_for('cases.edit_case_victims_edit', case_id=case_id, delete=1, victim_id=victim.victim_id) }}"
+                          method="post">
+                        <button type="submit" class="btn btn-danger">Remove from case
+                        </button>
+                    </form>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">No victims in the case.</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <table class="table">
+        <thead>
+
+        <tr>
+            <th scope="col">Victim ID</th>
+            <th scope="col">Name</th>
+            <th scope="col">DOB</th>
+            <th scope="col">Contact info</th>
+            <th scope="col">Actions</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        {% for victim in all_victims %}
+            <tr>
+                <td>{{ victim.victim_id }}</td>
+                <td>{{ victim.name if victim.name != '' else  'No name' }}</td>
+                <td>{{ victim.date_of_birth if victim.date_of_birth != '' else  'No DOB' }}</td>
+                <td>{{ victim.contact_info if victim.contact_info != '' else 'No contact' }}</td>
+                <td>
+                    <form action="{{ url_for('cases.edit_case_victims_edit', case_id=case_id, delete=0, victim_id=victim.victim_id) }}"
+                          method="post">
+                        <button type="submit" class="btn btn-primary">
+                            Add to case
+                        </button>
+                    </form>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">No victims found.</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

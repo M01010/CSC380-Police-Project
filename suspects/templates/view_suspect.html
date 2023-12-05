@@ -1,35 +1,34 @@
 {% extends "layout.html" %}
 {% block content %}
-    {% if victim %}
+
         <header class="mb-3">
             <div class="container">
-                <h1 class="text-center">Victim</h1>
+                <h1 class="text-center">suspect</h1>
             </div>
         </header>
 
         <div class="card">
             <div class="card-body" style="align-content: center">
-                <h5 class="card-title">{{ victim.name if victim.name != '' else 'No name' }}</h5>
-                <p class="card-text">Additional details about the victim.</p>
+                <h5 class="card-title">{{ suspect.name if suspect.name != '' else 'No name' }}</h5>
+                <p class="card-text">Additional details about the suspect.</p>
                 <ul class="list-group list-group-flush">
-                    <li class="list-group-item">ID: {{ victim.victim_id }}</li>
+                    <li class="list-group-item">ID: {{ suspect.suspect_id }}</li>
                     <li class="list-group-item">
-                        DOB: {{ victim.date_of_birth if victim.date_of_birth != '' else 'No DOB' }}</li>
-                    <li class="list-group-item">Contact
-                        info: {{ victim.contact_info if victim.contact_info != '' else 'No contact info' }}</li>
+                        DOB: {{ suspect.date_of_birth if suspect.date_of_birth != '' else 'No DOB' }}</li>
+
                 </ul>
             </div>
             <div class="card-body">
-                <a href="{{ url_for('victims.edit_victim', victim_id=victim.victim_id) }}"
+                <a href="{{ url_for('suspects.edit_suspect', suspect_id=suspect.suspect_id) }}"
                    class="btn btn-warning">Edit</a>
-                <a href="{{ url_for('victims.delete_victim', victim_id=victim.victim_id) }}" class="btn btn-danger">Delete</a>
+                <a href="{{ url_for('suspects.delete_suspect', suspect_id=suspect.suspect_id) }}" class="btn btn-danger">Delete</a>
             </div>
-            {#    <a href="{{ url_for('victims.view_victims') }}" class="btn btn-primary">Return to Victims</a>#}
+            {#    <a href="{{ url_for('suspects.view_suspects') }}" class="btn btn-primary">Return to suspects</a>#}
         </div>
         <br>
         <div class="card">
             <div class="card-header">
-                <h5 class="card-title">cases {{ victim.name }} is affected in: </h5>
+                <h5 class="card-title">cases {{ suspect.name }} is affected in: </h5>
             </div>
             <div class="card-body">
 
@@ -71,9 +70,7 @@
         </div>
 
 
-    {% else %}
-        <h1>Sorry, no victim found</h1>
-    {% endif %}
+
 
 
 {% endblock content %}

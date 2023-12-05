@@ -1,0 +1,31 @@
+{% extends "layout.html" %}
+{% block content %}
+    <header class="mb-4">
+        <div class="container">
+            <h1 class="text-center">Add New Body Cam</h1>
+        </div>
+    </header>
+
+    <form action="{{ url_for('body_cams.add_body_cam') }}" method="post">
+
+        <div class="mb-3">
+            <label for="bodyCamIdInput" class="form-label">Body Cam ID:</label>
+            <input type="number" min="0" class="form-control" id="bodyCamIdInput" name="body_cam_id"
+                   placeholder="Enter Body Cam ID"
+                   required>
+        </div>
+
+        <div class="mb-3">
+            <label for="serialNumber" class="form-label">Serial Number:</label>
+            <input type="number" class="form-control" id="serialNumber" name="serial_number"
+                   placeholder="Enter Serial Number">
+        </div>
+
+        <div class="mb-3">
+            <label for="model" class="form-label">Model:</label>
+            <input type="text" class="form-control" id="model" name="model" placeholder="Enter Model">
+        </div>
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+{% endblock %}

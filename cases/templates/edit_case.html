@@ -8,6 +8,17 @@
 
     <form action="{{ url_for('cases.edit_case', case_id=case.case_id) }}" method="post">
         <div class="mb-3">
+            <label for="caseName" class="form-label">Case name:</label>
+            <input class="form-control" id="caseName" name="name" value="{{ case.name }}"
+                   placeholder="Enter Case Name">
+        </div>
+        <div class="mb-3">
+            <label for="caseDes" class="form-label">Case Description:</label>
+            <input class="form-control" id="caseDes" name="description" value="{{ case.description }}"
+                   placeholder="Enter Case Description">
+        </div>
+        <div class="mb-3">
+
             <label for="caseTypeSelect" class="form-label">Case Type:</label>
             <select class="form-select" id="caseTypeSelect" name="case_type" required>
                 <option value={{ case.case_type }}>{{ case.case_type }}</option>
@@ -42,6 +53,14 @@
                 {% endfor %}
             </select>
         </div>
+
+        {#        <div class="form-check">#}
+        {#            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">#}
+        {#            <label class="form-check-label" for="flexCheckDefault">#}
+        {#                Default checkbox#}
+        {#            </label>#}
+        {#        </div>#}
+
 
         <div class="mb-3">
             <label for="dateReportedInput" class="form-label">Date Reported:</label>
