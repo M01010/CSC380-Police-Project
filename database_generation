@@ -1,0 +1,128 @@
+-- --------------------------------------------------------
+-- Host:                         127.0.0.1
+-- Server version:               10.4.28-MariaDB - mariadb.org binary distribution
+-- Server OS:                    Win64
+-- HeidiSQL Version:             12.5.0.6677
+-- --------------------------------------------------------
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET NAMES utf8 */;
+/*!50503 SET NAMES utf8mb4 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+
+-- Dumping database structure for policedb
+CREATE DATABASE IF NOT EXISTS policedb /*!40100 DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci */;
+USE policedb;
+
+-- Dumping structure for table policedb.accused_in
+CREATE TABLE IF NOT EXISTS accused_in (
+  SUSPECT_suspect_id int(11) NOT NULL,
+  CASE_case_id int(11) NOT NULL,
+  PRIMARY KEY (SUSPECT_suspect_id,CASE_case_id),
+  KEY fk_SUSPECT_has_CASE_CASE1 (CASE_case_id),
+  CONSTRAINT fk_SUSPECT_has_CASE_CASE1 FOREIGN KEY (CASE_case_id) REFERENCES case (case_id) ON DELETE CASCADE ON UPDATE NO ACTION,
+  CONSTRAINT fk_SUSPECT_has_CASE_SUSPECT1 FOREIGN KEY (SUSPECT_suspect_id) REFERENCES suspect (suspect_id) ON DELETE CASCADE ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+-- Data exporting was unselected.
+
+-- Dumping structure for table policedb.affected_in
+CREATE TABLE IF NOT EXISTS affected_in (
+  VICTIM_victim_id int(11) NOT NULL,
+  CASE_case_id int(11) NOT NULL,
+  PRIMARY KEY (VICTIM_victim_id,CASE_case_id),
+  KEY fk_VICTIM_has_CASE_CASE1 (CASE_case_id),
+  CONSTRAINT fk_VICTIM_has_CASE_CASE1 FOREIGN KEY (CASE_case_id) REFERENCES case (case_id) ON DELETE CASCADE ON UPDATE NO ACTION,
+  CONSTRAINT fk_VICTIM_has_CASE_VICTIM1 FOREIGN KEY (VICTIM_victim_id) REFERENCES victim (victim_id) ON DELETE CASCADE ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+-- Data exporting was unselected.
+
+-- Dumping structure for table policedb.body_cam
+CREATE TABLE IF NOT EXISTS body_cam (
+  body_cam_id int(11) NOT NULL,
+  serial_number varchar(45) DEFAULT NULL,
+  model varchar(45) DEFAULT NULL,
+  PRIMARY KEY (body_cam_id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+-- Data exporting was unselected.
+
+-- Dumping structure for table policedb.case
+CREATE TABLE IF NOT EXISTS case (
+  case_id int(11) NOT NULL,
+  case_type varchar(45) DEFAULT NULL,
+  status varchar(45) DEFAULT NULL,
+  date_reported date DEFAULT NULL,
+  OFFICER_officer_id int(11) NOT NULL,
+  name varchar(50) DEFAULT NULL,
+  description varchar(300) DEFAULT NULL,
+  PRIMARY KEY (case_id),
+  KEY fk_CASE_OFFICER1 (OFFICER_officer_id),
+  CONSTRAINT fk_CASE_OFFICER1 FOREIGN KEY (OFFICER_officer_id) REFERENCES officer (officer_id) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+-- Data exporting was unselected.
+
+-- Dumping structure for table policedb.officer
+CREATE TABLE IF NOT EXISTS officer (
+  officer_id int(11) NOT NULL,
+  name varchar(45) DEFAULT NULL,
+  badge_number int(11) NOT NULL,
+  rank varchar(45) DEFAULT NULL,
+  date_of_birth date DEFAULT NULL,
+  BODY_CAM_body_cam_id int(11) NOT NULL,
+  PRIMARY KEY (officer_id),
+  UNIQUE KEY BODY_CAM_body_cam_id_u (BODY_CAM_body_cam_id) USING BTREE,
+  UNIQUE KEY badge_number (badge_number),
+  KEY BODY_CAM_body_cam_id (BODY_CAM_body_cam_id),
+  CONSTRAINT fk_OFFICER_BODY_CAM1 FOREIGN KEY (BODY_CAM_body_cam_id) REFERENCES body_cam (body_cam_id) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+-- Data exporting was unselected.
+
+-- Dumping structure for table policedb.suspect
+CREATE TABLE IF NOT EXISTS suspect (
+  suspect_id int(11) NOT NULL,
+  name varchar(45) DEFAULT NULL,
+  date_of_birth varchar(45) DEFAULT NULL,
+  PRIMARY KEY (suspect_id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+-- Data exporting was unselected.
+
+-- Dumping structure for table policedb.victim
+CREATE TABLE IF NOT EXISTS victim (
+  victim_id int(11) NOT NULL,
+  name varchar(45) DEFAULT NULL,
+  date_of_birth varchar(45) DEFAULT NULL,
+  contact_info varchar(45) DEFAULT NULL,
+  PRIMARY KEY (victim_id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+-- Data exporting was unselected.
+
+-- Dumping structure for table policedb.video
+CREATE TABLE IF NOT EXISTS video (
+  video_id int(11) NOT NULL,
+  link varchar(45) DEFAULT NULL,
+  size varchar(45) DEFAULT NULL,
+  recording_date date DEFAULT NULL,
+  BODY_CAM_body_cam_id int(11) NOT NULL,
+  PRIMARY KEY (video_id),
+  KEY FK_video_body_cam (BODY_CAM_body_cam_id),
+  CONSTRAINT FK_video_body_cam FOREIGN KEY (BODY_CAM_body_cam_id) REFERENCES body_cam (body_cam_id) ON DELETE CASCADE ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+-- Data exporting was unselected.
+
+/*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
+/*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
+/*!40014 SET FOREIGN_KEY_CHECKS=IFNULL(@OLD_FOREIGN_KEY_CHECKS, 1) */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40111 SET SQL_NOTES=IFNULL(@OLD_SQL_NOTES, 1) */;
